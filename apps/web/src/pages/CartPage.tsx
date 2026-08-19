@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { ShopHeader } from '../components/ShopHeader'
 import { formatPrice } from '../lib/api'
 import { cartTotal, useCartStore } from '../lib/cart'
 import './shop.css'
@@ -11,6 +10,6 @@ export function CartPage() {
   const remove = useCartStore((state) => state.remove)
 
   return (
-    <main className="shop-page"><ShopHeader /><section className="cart"><p className="eyebrow">Seu carrinho</p><h1>Pronto para a próxima aventura.</h1>{items.length === 0 ? <div className="cart-empty"><p>Seu carrinho ainda está vazio.</p><Link to="/catalogo">Explorar catálogo →</Link></div> : <div className="cart-layout"><div>{items.map((item) => <article className="cart-item" key={item.id}><div><p>{item.productType}</p><h2>{item.name}</h2><strong>{formatPrice(item.priceCents)}</strong></div><div className="quantity"><button type="button" onClick={() => decrement(item.id)}>−</button><span>{item.quantity}</span><button type="button" disabled={item.quantity >= item.stock} onClick={() => add(item)}>+</button></div><button className="remove" type="button" onClick={() => remove(item.id)}>Remover</button></article>)}</div><aside className="cart-summary"><p>Resumo</p><strong>{formatPrice(cartTotal(items))}</strong><span>Subtotal</span><button type="button" disabled>Checkout em breve</button><small>O pagamento será implementado em uma próxima etapa.</small></aside></div>}</section></main>
+    <main className="shop-page"><section className="cart"><p className="eyebrow">Seu carrinho</p><h1>Pronto para a próxima aventura.</h1>{items.length === 0 ? <div className="cart-empty"><p>Seu carrinho ainda está vazio.</p><Link to="/catalogo">Explorar catálogo →</Link></div> : <div className="cart-layout"><div>{items.map((item) => <article className="cart-item" key={item.id}><div><p>{item.productType}</p><h2>{item.name}</h2><strong>{formatPrice(item.priceCents)}</strong></div><div className="quantity"><button type="button" onClick={() => decrement(item.id)}>−</button><span>{item.quantity}</span><button type="button" disabled={item.quantity >= item.stock} onClick={() => add(item)}>+</button></div><button className="remove" type="button" onClick={() => remove(item.id)}>Remover</button></article>)}</div><aside className="cart-summary"><p>Resumo</p><strong>{formatPrice(cartTotal(items))}</strong><span>Subtotal</span><button type="button" disabled>Checkout em breve</button><small>O pagamento será implementado em uma próxima etapa.</small></aside></div>}</section></main>
   )
 }

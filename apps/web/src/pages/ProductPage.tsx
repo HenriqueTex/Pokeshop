@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
-import { ShopHeader } from '../components/ShopHeader'
 import { fetchProduct, formatPrice, mediaUrl } from '../lib/api'
 import { useCartStore } from '../lib/cart'
 import './shop.css'
@@ -14,7 +13,6 @@ export function ProductPage() {
 
   return (
     <main className="shop-page">
-      <ShopHeader />
       {productQuery.isPending && <p className="page-message">Carregando item…</p>}
       {productQuery.isError && <section className="not-found"><p className="eyebrow">Item indisponível</p><h1>Esta raridade não está no catálogo.</h1><Link className="gold-link" to="/catalogo">Voltar ao catálogo →</Link></section>}
       {product && <section className="product-detail">

@@ -6,6 +6,11 @@
   position: relative;
 }
 
+.storefront-shell > .shop-header:not(.shop-header--home) {
+  padding-right: clamp(1.5rem, 6vw, 5.5rem);
+  padding-left: clamp(1.5rem, 6vw, 5.5rem);
+}
+
 .products-menu::after {
   position: absolute;
   top: 100%;

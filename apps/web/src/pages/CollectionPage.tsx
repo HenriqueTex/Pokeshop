@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { ProductCard } from '../components/ProductCard'
-import { ShopHeader } from '../components/ShopHeader'
 import { fetchCollection } from '../lib/api'
 import './shop.css'
 
@@ -12,7 +11,6 @@ export function CollectionPage() {
 
   return (
     <main className="shop-page">
-      <ShopHeader />
       {collectionQuery.isPending && <p className="page-message">Carregando coleção…</p>}
       {collectionQuery.isError && <section className="not-found"><p className="eyebrow">Coleção indisponível</p><h1>Essa jornada não está disponível agora.</h1><Link className="gold-link" to="/catalogo">Voltar ao catálogo →</Link></section>}
       {collection && <>

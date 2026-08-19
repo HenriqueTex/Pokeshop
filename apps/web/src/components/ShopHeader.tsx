@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { cartCount, useCartStore } from '../lib/cart'
 
 const productCategories = [
@@ -16,9 +16,11 @@ const productCategories = [
 
 export function ShopHeader() {
   const items = useCartStore((state) => state.items)
+  const location = useLocation()
+  const isHome = location.pathname === '/home'
 
   return (
-    <header className="shop-header">
+    <header className={`shop-header${isHome ? ' shop-header--home' : ''}`}>
       <Link className="shop-logo" to="/home">Triade Arte <span>Pokémon Store</span></Link>
       <nav aria-label="Navegação principal">
         <Link to="/home">Home</Link>
