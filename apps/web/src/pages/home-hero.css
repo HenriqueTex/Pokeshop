@@ -1,7 +1,11 @@
 .home-banner {
+  position: relative;
+  isolation: isolate;
+  width: 100vw;
   min-height: 67svh;
   max-width: none;
   padding: clamp(2rem, 7vw, 6rem);
+  margin-left: calc(50% - 50vw);
   background:
     linear-gradient(90deg, rgb(4 8 4 / 86%) 0%, rgb(4 8 4 / 57%) 44%, rgb(4 8 4 / 12%) 76%),
     linear-gradient(0deg, rgb(4 8 4 / 38%), transparent 48%),
@@ -10,7 +14,20 @@
 
 .home-banner > div {
   position: relative;
+  z-index: 1;
   max-width: 48rem;
+}
+
+.home-banner::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 30%;
+  background: linear-gradient(transparent, #0a0a0a);
+  content: '';
+  pointer-events: none;
 }
 
 .home-banner > div > p:not(.eyebrow) {
