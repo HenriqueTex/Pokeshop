@@ -1,6 +1,6 @@
 .shop-page {
   min-height: 100svh;
-  padding: 1.5rem clamp(1.5rem, 6vw, 5.5rem) 5rem;
+  padding: 6rem clamp(1.5rem, 6vw, 5.5rem) 5rem;
   background:
     radial-gradient(
       circle at 84% 12%,
@@ -11,12 +11,19 @@
     #000;
 }
 .shop-header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding-block: 0.75rem;
-  border-bottom: 1px solid rgb(255 255 255 / 13%);
+  padding: 1.25rem clamp(1.5rem, 6vw, 5.5rem);
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  background: linear-gradient(180deg, rgb(4 8 4 / 50%), rgb(4 8 4 / 10%));
+  backdrop-filter: blur(6px);
 }
 .shop-logo {
   color: #fff;
@@ -634,6 +641,9 @@
   .shop-header nav a:not(:last-child) {
     display: none;
   }
+  .shop-header {
+    padding: 1.125rem 1.5rem;
+  }
   .home-banner {
     min-height: 62svh;
   }
@@ -681,11 +691,6 @@
 
 .products-menu {
   position: relative;
-}
-
-.storefront-shell > .shop-header:not(.shop-header--home) {
-  padding-right: clamp(1.5rem, 6vw, 5.5rem);
-  padding-left: clamp(1.5rem, 6vw, 5.5rem);
 }
 
 .products-menu::after {
