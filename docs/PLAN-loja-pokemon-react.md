@@ -89,7 +89,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 - [x] Implementar o design system e layout responsivo. *(Agente: frontend-specialist)*
 - [x] Construir Home com banner promocional, destaques e atalhos para coleções.
 - [x] Construir página de catálogo com filtros acessíveis, URL sincronizada (`?collection=&type=&sort=`), estados de carregamento/vazio/erro e ordenação.
-- [ ] Criar página de coleção e detalhe do produto, incluindo galeria, preço, disponibilidade e CTA de adicionar ao carrinho.
+- [x] Criar página de coleção e detalhe do produto, incluindo galeria, preço, disponibilidade e CTA de adicionar ao carrinho.
 - [x] Criar header e navegação mobile; o footer acompanha a página de produto.
 
 **Aceite:** navegação funciona em telas pequenas e grandes; filtros podem ser compartilhados por URL; Home e catálogo usam dados reais da API.

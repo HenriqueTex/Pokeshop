@@ -14,6 +14,17 @@ export default class CollectionsController {
     const collection = await Collection.query()
       .where('slug', params.slug)
       .where('is_published', true)
+      .preload('products', (productsQuery) => {
+        productsQuery
+          .where('status', 'published')
+          .whereNotNull('published_at')
+          .orderBy('is_featured', 'desc')
+          .orderBy('published_at', 'desc')
+          .preload('collections', (collectionsQuery) => {
+            collectionsQuery.where('is_published', true).orderBy('sort_order', 'asc')
+          })
+          .preload('images', (imagesQuery) => imagesQuery.orderBy('sort_order', 'asc'))
+      })
       .firstOrFail()
     return { data: collection }
   }

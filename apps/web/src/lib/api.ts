@@ -18,7 +18,17 @@ export type Product = {
   coverImageUrl: string | null
   isFeatured: boolean
   collections: Collection[]
+  images?: ProductImage[]
 }
+
+export type ProductImage = {
+  id: number
+  url: string
+  altText: string | null
+  sortOrder: number
+}
+
+export type CollectionDetails = Collection & { products: Product[] }
 
 export type PromotionalBanner = {
   id: number
@@ -71,6 +81,14 @@ export function fetchProducts(filters: ProductFilters) {
   })
   const suffix = search.size > 0 ? `?${search}` : ''
   return request<Paginated<Product>>(`/api/v1/products${suffix}`)
+}
+
+export function fetchProduct(slug: string) {
+  return request<{ data: Product }>(`/api/v1/products/${slug}`)
+}
+
+export function fetchCollection(slug: string) {
+  return request<{ data: CollectionDetails }>(`/api/v1/collections/${slug}`)
 }
 
 export function formatPrice(priceCents: number) {
