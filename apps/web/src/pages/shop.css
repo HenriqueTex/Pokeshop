@@ -960,7 +960,16 @@
 .capture-cart-button__top {
   top: 0;
   border-bottom: 3px solid #231d1d;
-  background: #e3350d;
+  background:
+    linear-gradient(
+      116deg,
+      transparent 0 20%,
+      #f5c937 20% 29%,
+      transparent 29% 71%,
+      #f5c937 71% 80%,
+      transparent 80%
+    ),
+    linear-gradient(180deg, #3c4043 0%, #111214 100%);
   transform: translateY(-100%);
 }
 
@@ -980,6 +989,7 @@
   border: 0.24rem solid #231d1d;
   border-radius: 50%;
   background: #f7f5ef;
+  box-shadow: 0 0 0 0.1rem #f5c937;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 360ms ease-out;
 }
