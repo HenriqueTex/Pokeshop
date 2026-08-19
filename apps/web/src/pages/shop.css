@@ -1050,8 +1050,7 @@
   position: relative;
   width: min(100%, 29rem);
   padding: 2.25rem;
-  border: 1px solid rgb(223 177 93 / 58%);
-  border-top: 0.2rem solid #dfb15d;
+  border: 1px solid rgb(255 255 255 / 12%);
   background: #171717;
   box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 54%);
   animation: stock-alert-modal-enter 240ms ease-out both;
