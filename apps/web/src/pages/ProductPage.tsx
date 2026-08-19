@@ -67,7 +67,7 @@ export function ProductPage() {
             <p className="eyebrow">
               {product.collections
                 .map((collection) => collection.name)
-                .join(" · ") || "Triade Arte"}
+                .join(" · ") || "PokeShop"}
             </p>
             <h1>{product.name}</h1>
             <p className="product-detail__type">

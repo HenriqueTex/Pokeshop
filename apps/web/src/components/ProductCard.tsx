@@ -59,7 +59,7 @@ export function ProductCard({ product }: { product: Product }) {
           <strong>{formatPrice(product.priceCents)}</strong>
         </div>
         <p className="product-card__collection">
-          {product.collections[0]?.name ?? "Triade Arte"}
+          {product.collections[0]?.name ?? "PokeShop"}
         </p>
         <h3>
           <Link to={`/produtos/${product.slug}`}>{product.name}</Link>

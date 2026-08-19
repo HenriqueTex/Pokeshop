@@ -6,21 +6,39 @@
     <meta name="theme-color" content="#080808" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-    <title>Triade Arte | Pokémon</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>PokeShop | Pokémon</title>
     <style>
       :root {
         color-scheme: dark;
-        font-family: Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family:
+          Roboto,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
         background: #080808;
         color: #fff;
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
-      html, body { margin: 0; min-height: 100%; }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
 
-      body { overflow: hidden; }
+      body {
+        overflow: hidden;
+      }
 
       .screen {
         position: fixed;
@@ -53,8 +71,12 @@
         transition: opacity 180ms ease-out;
       }
 
-      .splash.is-finished .splash__video { opacity: 0; }
-      .splash.is-finished .splash__final-frame { opacity: 1; }
+      .splash.is-finished .splash__video {
+        opacity: 0;
+      }
+      .splash.is-finished .splash__final-frame {
+        opacity: 1;
+      }
 
       .fluid-canvas {
         position: absolute;
@@ -135,7 +157,10 @@
         white-space: nowrap;
         visibility: hidden;
         opacity: 0;
-        transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+        transition:
+          border-color 180ms ease,
+          opacity 180ms ease,
+          transform 180ms ease;
       }
 
       .enter.is-revealed {
@@ -151,9 +176,17 @@
         transition: transform 180ms ease;
       }
 
-      .enter:hover { border-color: #fff; transform: translate(-50%, -2px); }
-      .enter:hover::after { transform: translateX(4px); }
-      .enter:focus-visible { outline: 2px solid #fff; outline-offset: 8px; }
+      .enter:hover {
+        border-color: #fff;
+        transform: translate(-50%, -2px);
+      }
+      .enter:hover::after {
+        transform: translateX(4px);
+      }
+      .enter:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 8px;
+      }
 
       .sound-toggle {
         position: absolute;
@@ -173,8 +206,13 @@
         text-transform: uppercase;
       }
 
-      .sound-toggle:hover { border-color: #fff; }
-      .sound-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+      .sound-toggle:hover {
+        border-color: #fff;
+      }
+      .sound-toggle:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 6px;
+      }
 
       .play-fallback {
         position: absolute;
@@ -194,40 +232,90 @@
         text-transform: uppercase;
       }
 
-      .play-fallback:hover { border-color: #fff; }
-      .play-fallback:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+      .play-fallback:hover {
+        border-color: #fff;
+      }
+      .play-fallback:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 6px;
+      }
 
       .store {
         display: none;
         background: #101010;
       }
 
-      .store__content { padding: 32px; text-align: center; animation: reveal 700ms ease-out both; }
-      .store h2 { margin: 0; font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 400; letter-spacing: -0.05em; }
-      .store p { margin: 18px 0 0; color: rgb(255 255 255 / 72%); font-size: 1rem; letter-spacing: 0.04em; }
+      .store__content {
+        padding: 32px;
+        text-align: center;
+        animation: reveal 700ms ease-out both;
+      }
+      .store h2 {
+        margin: 0;
+        font-size: clamp(2rem, 6vw, 4.5rem);
+        font-weight: 400;
+        letter-spacing: -0.05em;
+      }
+      .store p {
+        margin: 18px 0 0;
+        color: rgb(255 255 255 / 72%);
+        font-size: 1rem;
+        letter-spacing: 0.04em;
+      }
 
       @keyframes reveal {
-        from { opacity: 0; transform: translateY(14px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       @keyframes reveal-title {
-        from { opacity: 0; filter: blur(8px); transform: translateY(22px) scale(0.985); }
-        to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        from {
+          opacity: 0;
+          filter: blur(8px);
+          transform: translateY(22px) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0) scale(1);
+        }
       }
 
       @keyframes reveal-cta {
-        from { opacity: 0; filter: blur(6px); transform: translate(-58%, 0); }
-        to { opacity: 1; filter: blur(0); transform: translateX(-50%); }
+        from {
+          opacity: 0;
+          filter: blur(6px);
+          transform: translate(-58%, 0);
+        }
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateX(-50%);
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-        .fluid-canvas { display: none; }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+        .fluid-canvas {
+          display: none;
+        }
       }
 
       @media (pointer: coarse) {
-        .fluid-canvas { display: none; }
+        .fluid-canvas {
+          display: none;
+        }
       }
 
       @media (max-width: 900px) {
@@ -256,7 +344,9 @@
           transform: translateX(-50%);
         }
 
-        .enter:hover { transform: translate(-50%, -2px); }
+        .enter:hover {
+          transform: translate(-50%, -2px);
+        }
 
         .play-fallback {
           right: 50%;
@@ -265,18 +355,38 @@
         }
       }
 
-      body:has(#loja:target) .splash { display: none; }
-      body:has(#loja:target) .store { display: grid; }
+      body:has(#loja:target) .splash {
+        display: none;
+      }
+      body:has(#loja:target) .store {
+        display: grid;
+      }
     </style>
   </head>
   <body>
     <main>
       <section class="screen splash" aria-labelledby="titulo-principal">
-        <img class="splash__final-frame" src="FinalFrame.jpeg" alt="" aria-hidden="true" />
-        <video class="splash__video" autoplay muted playsinline webkit-playsinline preload="auto" poster="FinalFrame.jpeg" aria-hidden="true">
+        <img
+          class="splash__final-frame"
+          src="FinalFrame.jpeg"
+          alt=""
+          aria-hidden="true"
+        />
+        <video
+          class="splash__video"
+          autoplay
+          muted
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          poster="FinalFrame.jpeg"
+          aria-hidden="true"
+        >
           <source src="Gere_um_video_nesse_estlio_de.mp4" type="video/mp4" />
         </video>
-        <button class="play-fallback" type="button" hidden>Toque para iniciar →</button>
+        <button class="play-fallback" type="button" hidden>
+          Toque para iniciar →
+        </button>
         <script>
           const bootVideo = document.querySelector(".splash__video");
           const playFallback = document.querySelector(".play-fallback");
@@ -291,31 +401,40 @@
             const playAttempt = bootVideo.play();
             if (!playAttempt) return;
 
-            playAttempt.then(() => {
-              playFallback.hidden = true;
-            }).catch(() => {
-              playFallback.hidden = false;
-            });
+            playAttempt
+              .then(() => {
+                playFallback.hidden = true;
+              })
+              .catch(() => {
+                playFallback.hidden = false;
+              });
           };
 
           ["loadedmetadata", "loadeddata", "canplay"].forEach((eventName) => {
             bootVideo.addEventListener(eventName, bootAutoplay, { once: true });
           });
-          document.addEventListener("touchstart", bootAutoplay, { once: true, passive: true });
+          document.addEventListener("touchstart", bootAutoplay, {
+            once: true,
+            passive: true,
+          });
           playFallback.addEventListener("click", bootAutoplay);
           bootAutoplay();
         </script>
         <canvas class="fluid-canvas" id="fluid" aria-hidden="true"></canvas>
         <div class="splash__content">
-          <h1 class="brand" id="titulo-principal">Triade Arte<span>Pokémon Store</span></h1>
+          <h1 class="brand" id="titulo-principal">
+            PokeShop<span>Pokémon Store</span>
+          </h1>
           <a class="enter" href="#loja">Sua aventura começa aqui</a>
         </div>
-        <button class="sound-toggle" type="button" aria-pressed="false">Ativar som</button>
+        <button class="sound-toggle" type="button" aria-pressed="false">
+          Ativar som
+        </button>
       </section>
 
       <section class="screen store" id="loja" aria-labelledby="titulo-loja">
         <div class="store__content">
-          <h2 id="titulo-loja">Bem-vindo à Triade Arte</h2>
+          <h2 id="titulo-loja">Bem-vindo à PokeShop</h2>
           <p>Descubra itens que tornam cada aventura única.</p>
         </div>
       </section>
@@ -329,8 +448,9 @@
       const enter = document.querySelector(".enter");
       const playFallback = document.querySelector(".play-fallback");
 
-      const canUseFluidCursor = window.matchMedia("(pointer: fine)").matches
-        && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const canUseFluidCursor =
+        window.matchMedia("(pointer: fine)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const fluidCursor = canUseFluidCursor ? useFluidCursor() : null;
       let isEnterRevealed = false;
       let revealFallbackId;
@@ -359,18 +479,24 @@
       const startVideo = () => {
         if (isEnterRevealed) return;
 
-        video.play().then(() => {
-          playFallback.hidden = true;
-        }).catch(() => {
-          playFallback.hidden = false;
-        });
+        video
+          .play()
+          .then(() => {
+            playFallback.hidden = true;
+          })
+          .catch(() => {
+            playFallback.hidden = false;
+          });
       };
 
       const scheduleEnterFallback = () => {
         if (!Number.isFinite(video.duration) || video.duration <= 0) return;
 
         window.clearTimeout(revealFallbackId);
-        revealFallbackId = window.setTimeout(revealEnter, video.duration * 1000 + 400);
+        revealFallbackId = window.setTimeout(
+          revealEnter,
+          video.duration * 1000 + 400,
+        );
       };
 
       soundToggle.addEventListener("click", async () => {

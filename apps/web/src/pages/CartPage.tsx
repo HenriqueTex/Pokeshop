@@ -44,11 +44,11 @@ export function CartPage() {
                       {imageUrl ? (
                         <img src={imageUrl} alt="" />
                       ) : (
-                        <span aria-hidden="true">Triade Arte</span>
+                        <span aria-hidden="true">PokeShop</span>
                       )}
                     </Link>
                     <div className="cart-item__details">
-                      <p>{item.collectionName ?? "Triade Arte"}</p>
+                      <p>{item.collectionName ?? "PokeShop"}</p>
                       <h2>
                         <Link to={`/produtos/${item.slug}`}>{item.name}</Link>
                       </h2>

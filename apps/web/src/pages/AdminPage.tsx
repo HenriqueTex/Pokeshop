@@ -195,7 +195,7 @@ export function AdminPage() {
     <main className="admin-page">
       <header className="admin-header">
         <div>
-          <p className="eyebrow">Triade Arte</p>
+          <p className="eyebrow">PokeShop</p>
           <h1>Painel administrativo</h1>
         </div>
         <div>

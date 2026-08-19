@@ -20,9 +20,9 @@ const HomeController = () => import('#controllers/home_controller')
 const ProductsController = () => import('#controllers/products_controller')
 const MediaController = () => import('#controllers/media_controller')
 
-router.get('/', async () => ({ name: 'Triade Arte API', status: 'ok' }))
+router.get('/', async () => ({ name: 'PokeShop API', status: 'ok' }))
 
-router.get('/api/v1/health', async () => ({ status: 'ok', service: 'triade-api' }))
+router.get('/api/v1/health', async () => ({ status: 'ok', service: 'pokeshop-api' }))
 router.get('/api/v1/media/:filename', [MediaController, 'show'])
 
 router

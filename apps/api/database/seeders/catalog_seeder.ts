@@ -238,12 +238,15 @@ export default class extends BaseSeeder {
       const admin = await Admin.findBy('email', adminEmail)
       if (!admin) {
         await Admin.create({
-          name: 'Administrador Triade Arte',
+          name: 'Administrador PokeShop',
           email: adminEmail,
           password: adminPassword,
           role: 'admin',
           isActive: true,
         })
+      } else if (admin.name !== 'Administrador PokeShop') {
+        admin.name = 'Administrador PokeShop'
+        await admin.save()
       }
     }
   }

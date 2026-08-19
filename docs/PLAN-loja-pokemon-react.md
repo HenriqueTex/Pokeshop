@@ -12,18 +12,18 @@
 
 ## Decisões de arquitetura
 
-| Decisão | Escolha | Motivo |
-| --- | --- | --- |
-| Repositório | Monorepo `npm workspaces` | Frontend e API evoluem juntos, com comandos e tipos compartilháveis; escolhido porque o `pnpm` local está configurado para outro projeto. |
-| Frontend | React + TypeScript + Vite | Leve, rápido para uma interface de catálogo e sem acoplamento a SSR nesta fase. |
-| Backend | AdonisJS 6 + TypeScript + Lucid | Convenções sólidas para API, validação, sessões administrativas e migrations. |
-| Banco | PostgreSQL | Bom suporte para filtros, relações produto–coleção e evolução do catálogo. |
-| Dados remotos | TanStack Query | Cache, estados de carregamento e invalidação previsíveis para catálogo e admin. |
-| Carrinho | Zustand com persistência em `localStorage` | Não exige conta e preserva o carrinho ao recarregar. |
-| Rotas | React Router | Separa splash, Home, catálogo, detalhes, carrinho e admin. |
-| Estilos | CSS com tokens + componentes próprios | Mantém a personalidade da splash sem introduzir uma biblioteca visual genérica. |
-| Admin | Autenticação somente para administradores, via sessão segura | Protege escrita no catálogo; clientes continuam anônimos. |
-| Imagens | Armazenamento local em desenvolvimento e adaptador para storage S3 em produção | Permite começar simples sem bloquear publicação futura. |
+| Decisão       | Escolha                                                                        | Motivo                                                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Repositório   | Monorepo `npm workspaces`                                                      | Frontend e API evoluem juntos, com comandos e tipos compartilháveis; escolhido porque o `pnpm` local está configurado para outro projeto. |
+| Frontend      | React + TypeScript + Vite                                                      | Leve, rápido para uma interface de catálogo e sem acoplamento a SSR nesta fase.                                                           |
+| Backend       | AdonisJS 6 + TypeScript + Lucid                                                | Convenções sólidas para API, validação, sessões administrativas e migrations.                                                             |
+| Banco         | PostgreSQL                                                                     | Bom suporte para filtros, relações produto–coleção e evolução do catálogo.                                                                |
+| Dados remotos | TanStack Query                                                                 | Cache, estados de carregamento e invalidação previsíveis para catálogo e admin.                                                           |
+| Carrinho      | Zustand com persistência em `localStorage`                                     | Não exige conta e preserva o carrinho ao recarregar.                                                                                      |
+| Rotas         | React Router                                                                   | Separa splash, Home, catálogo, detalhes, carrinho e admin.                                                                                |
+| Estilos       | CSS com tokens + componentes próprios                                          | Mantém a personalidade da splash sem introduzir uma biblioteca visual genérica.                                                           |
+| Admin         | Autenticação somente para administradores, via sessão segura                   | Protege escrita no catálogo; clientes continuam anônimos.                                                                                 |
+| Imagens       | Armazenamento local em desenvolvimento e adaptador para storage S3 em produção | Permite começar simples sem bloquear publicação futura.                                                                                   |
 
 ## Estrutura prevista
 
@@ -39,18 +39,18 @@ docs/
 
 ## Modelo de dados inicial
 
-| Entidade | Campos principais | Relações |
-| --- | --- | --- |
-| `admins` | nome, email, senha protegida, papel, ativo | autentica o painel |
-| `products` | nome, slug, descrição, preço em centavos, estoque, status, tipo, imagem de capa, data de lançamento, destaque | N:N com coleções |
-| `collections` | nome, slug, descrição, imagem/banner, ordem, publicada | N:N com produtos |
-| `product_collections` | product_id, collection_id | relação catálogo–coleção |
-| `product_images` | product_id, URL, texto alternativo, ordem | galeria de produto |
-| `promotional_banners` | título, subtítulo, CTA, imagem, destino, período, ativo, ordem | Home |
+| Entidade              | Campos principais                                                                                             | Relações                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `admins`              | nome, email, senha protegida, papel, ativo                                                                    | autentica o painel       |
+| `products`            | nome, slug, descrição, preço em centavos, estoque, status, tipo, imagem de capa, data de lançamento, destaque | N:N com coleções         |
+| `collections`         | nome, slug, descrição, imagem/banner, ordem, publicada                                                        | N:N com produtos         |
+| `product_collections` | product_id, collection_id                                                                                     | relação catálogo–coleção |
+| `product_images`      | product_id, URL, texto alternativo, ordem                                                                     | galeria de produto       |
+| `promotional_banners` | título, subtítulo, CTA, imagem, destino, período, ativo, ordem                                                | Home                     |
 
 Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, busca por nome e ordenação por relevância, novidade, menor e maior preço.
 
-## Design system: Triade Arte
+## Design system: PokeShop
 
 - **Tom visual:** escuro, cinematográfico, artesanal e colecionável; dourado suave apenas como brilho e ação, nunca como fundo dominante.
 - **Tokens:** superfícies quase pretas, texto branco/off-white, dourado quente para foco/CTA, escala de cinzas para informações auxiliares.
@@ -63,7 +63,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 1 — Fundação técnica
 
-- [x] Criar o workspace `npm`, `apps/web` e `apps/api`. *(Agentes: app-builder, backend-specialist)*
+- [x] Criar o workspace `npm`, `apps/web` e `apps/api`. _(Agentes: app-builder, backend-specialist)_
 - [x] Configurar React, TypeScript, Vite, React Router, TanStack Query e estrutura de rotas.
 - [x] Configurar AdonisJS, PostgreSQL, Lucid, variáveis de ambiente e CORS local. Migrations começam na Fase 2.
 - [ ] Definir contratos de API e tipos compartilhados para produto, coleção, banner e paginação.
@@ -73,7 +73,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 2 — Catálogo e API pública
 
-- [x] Criar migrations, modelos e seeders de produtos, coleções, imagens e banners. Admin fica para a Fase 5. *(Agentes: database-architect, backend-specialist)*
+- [x] Criar migrations, modelos e seeders de produtos, coleções, imagens e banners. Admin fica para a Fase 5. _(Agentes: database-architect, backend-specialist)_
 - [x] Implementar endpoints públicos paginados:
   - `GET /products` com filtros e ordenação;
   - `GET /products/:slug`;
@@ -86,7 +86,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 3 — Experiência pública
 
-- [x] Implementar o design system e layout responsivo. *(Agente: frontend-specialist)*
+- [x] Implementar o design system e layout responsivo. _(Agente: frontend-specialist)_
 - [x] Construir Home com banner promocional, destaques e atalhos para coleções.
 - [x] Construir página de catálogo com filtros acessíveis, URL sincronizada (`?collection=&type=&sort=`), estados de carregamento/vazio/erro e ordenação.
 - [x] Criar página de coleção e detalhe do produto, incluindo galeria, preço, disponibilidade e CTA de adicionar ao carrinho.
@@ -96,7 +96,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 4 — Carrinho de visitante
 
-- [x] Criar store persistido com itens, quantidade e remoção do carrinho. *(Agentes: frontend-specialist, react-best-practices)*
+- [x] Criar store persistido com itens, quantidade e remoção do carrinho. _(Agentes: frontend-specialist, react-best-practices)_
 - [x] Impedir quantidades acima do estoque informado.
 - [x] Criar página `/carrinho` com subtotal e aviso explícito de que o checkout virá depois.
 - [x] Não implementar pagamento, endereço, frete, cupom ou criação de pedido.
@@ -105,7 +105,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 5 — Área administrativa
 
-- [x] Implementar login, logout, middleware de administrador e proteção de todas as rotas de escrita. *(Agentes: backend-specialist, security-auditor)*
+- [x] Implementar login, logout, middleware de administrador e proteção de todas as rotas de escrita. _(Agentes: backend-specialist, security-auditor)_
 - [x] Criar endpoints administrativos para CRUD de produtos, coleções, banners e upload local de imagens.
 - [x] Criar painel React com listagem, busca, formulários validados, publicação/despublicação e feedback de operação.
 - [x] Garantir que alterações invalidem o cache e apareçam imediatamente na loja.
@@ -114,10 +114,10 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 6 — Qualidade e entrega
 
-- [ ] Testar API: filtros, paginação, autorização administrativa, validações e publicação. *(Agentes: test-engineer, backend-specialist)*
+- [ ] Testar API: filtros, paginação, autorização administrativa, validações e publicação. _(Agentes: test-engineer, backend-specialist)_
 - [ ] Testar fluxos críticos no navegador: splash → Home, filtro → produto, produto → carrinho e login → CRUD.
 - [ ] Fazer revisão de acessibilidade, responsividade, performance de imagens e comportamento sem WebGL.
-- [ ] Configurar CI para lint, tipos, testes e build; definir estratégia de deploy para web, API, PostgreSQL e storage. *(Agente: devops-engineer)*
+- [ ] Configurar CI para lint, tipos, testes e build; definir estratégia de deploy para web, API, PostgreSQL e storage. _(Agente: devops-engineer)_
 
 ## Dependências e ordem
 

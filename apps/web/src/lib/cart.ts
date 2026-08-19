@@ -61,8 +61,8 @@ export const useCartStore = create<CartStore>()(
                     ? product.collectionName
                     : "collections" in product &&
                         Array.isArray(product.collections)
-                      ? (product.collections[0]?.name ?? "Triade Arte")
-                      : "Triade Arte",
+                      ? (product.collections[0]?.name ?? "PokeShop")
+                      : "PokeShop",
                 quantity: 1,
               },
             ],
