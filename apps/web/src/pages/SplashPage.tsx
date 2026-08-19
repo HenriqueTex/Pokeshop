@@ -57,6 +57,12 @@ export function SplashPage() {
     if (!video.muted) await video.play()
   }
 
+  const skipIntro = () => {
+    window.clearTimeout(fallbackTimerRef.current)
+    videoRef.current?.pause()
+    navigate('/home')
+  }
+
   return (
     <main className={`splash ${isFinished ? 'splash--finished' : ''}`}>
       <img className="splash__final-frame" src="/media/splash-final.jpeg" alt="" />
@@ -74,7 +80,7 @@ export function SplashPage() {
         </button>
       </section>
 
-      {!isFinished && <button className="splash__sound" type="button" aria-pressed={!isMuted} onClick={() => void toggleSound()}>{isMuted ? 'Ativar som' : 'Desativar som'}</button>}
+      {!isFinished && <div className="splash__controls"><button className="splash__sound" type="button" aria-pressed={!isMuted} onClick={() => void toggleSound()}>{isMuted ? 'Ativar som' : 'Desativar som'}</button><button className="splash__skip" type="button" onClick={skipIntro}>Pular animação →</button></div>}
       {isAutoplayBlocked && !isFinished && <button className="splash__play-fallback" type="button" onClick={() => void startVideo()}>Toque para iniciar →</button>}
     </main>
   )
