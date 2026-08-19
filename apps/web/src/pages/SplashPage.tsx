@@ -58,9 +58,8 @@ export function SplashPage() {
   }
 
   const skipIntro = () => {
-    window.clearTimeout(fallbackTimerRef.current)
     videoRef.current?.pause()
-    navigate('/home')
+    finishIntro()
   }
 
   return (
