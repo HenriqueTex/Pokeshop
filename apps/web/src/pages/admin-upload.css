@@ -1,0 +1,23 @@
+.admin-image-upload {
+  display: grid;
+  gap: .65rem;
+  padding: .9rem;
+  border: 1px solid rgb(255 255 255 / 13%);
+}
+
+.admin-upload-control {
+  color: #dfb15d !important;
+}
+
+.admin-upload-control input {
+  padding: .45rem 0;
+  border: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 68%);
+  font-size: .76rem;
+}
+
+.admin-image-upload small {
+  color: rgb(255 255 255 / 58%);
+  font-size: .75rem;
+}

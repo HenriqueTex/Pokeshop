@@ -106,7 +106,7 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 ### Fase 5 — Área administrativa
 
 - [x] Implementar login, logout, middleware de administrador e proteção de todas as rotas de escrita. *(Agentes: backend-specialist, security-auditor)*
-- [ ] Criar endpoints administrativos para CRUD de produtos, coleções, banners e upload de imagens. *(CRUD concluído; upload local de arquivos fica para a etapa de mídia.)*
+- [x] Criar endpoints administrativos para CRUD de produtos, coleções, banners e upload local de imagens.
 - [x] Criar painel React com listagem, busca, formulários validados, publicação/despublicação e feedback de operação.
 - [x] Garantir que alterações invalidem o cache e apareçam imediatamente na loja.
 

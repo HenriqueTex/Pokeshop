@@ -13,6 +13,7 @@ coverage/
 **/coverage/
 tmp/
 **/tmp/
+apps/api/storage/uploads/
 *.tsbuildinfo
 
 # Local environment and secrets

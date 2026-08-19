@@ -14,13 +14,16 @@ const AdminBannersController = () => import('#controllers/admin_banners_controll
 const AdminCollectionsController = () => import('#controllers/admin_collections_controller')
 const AdminProductsController = () => import('#controllers/admin_products_controller')
 const AdminSessionsController = () => import('#controllers/admin_sessions_controller')
+const AdminUploadsController = () => import('#controllers/admin_uploads_controller')
 const CollectionsController = () => import('#controllers/collections_controller')
 const HomeController = () => import('#controllers/home_controller')
 const ProductsController = () => import('#controllers/products_controller')
+const MediaController = () => import('#controllers/media_controller')
 
 router.get('/', async () => ({ name: 'Triade Arte API', status: 'ok' }))
 
 router.get('/api/v1/health', async () => ({ status: 'ok', service: 'triade-api' }))
+router.get('/api/v1/media/:filename', [MediaController, 'show'])
 
 router
   .group(() => {
@@ -53,6 +56,8 @@ router
     router.post('/banners', [AdminBannersController, 'store'])
     router.put('/banners/:id', [AdminBannersController, 'update'])
     router.delete('/banners/:id', [AdminBannersController, 'destroy'])
+
+    router.post('/uploads', [AdminUploadsController, 'store'])
   })
   .prefix('/api/v1/admin')
   .use(middleware.admin())

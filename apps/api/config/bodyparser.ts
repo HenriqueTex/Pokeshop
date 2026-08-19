@@ -39,7 +39,7 @@ const bodyParserConfig = defineConfig({
      * move all uploaded files inside the tmp folder of your
      * operating system
      */
-    autoProcess: true,
+    autoProcess: ['/api/v1/admin/uploads'],
     convertEmptyStringsToNull: true,
     processManually: [],
 
@@ -47,7 +47,7 @@ const bodyParserConfig = defineConfig({
      * Maximum limit of data to parse including all files
      * and fields
      */
-    limit: '20mb',
+    limit: '5mb',
     types: ['multipart/form-data'],
   },
 })
