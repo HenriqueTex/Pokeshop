@@ -42,7 +42,7 @@ export function CollectionsPage() {
                   style={
                     imageUrl
                       ? {
-                          backgroundImage: `linear-gradient(rgb(0 0 0 / 72%), rgb(0 0 0 / 72%)), url(${imageUrl})`,
+                          backgroundImage: `url(${imageUrl})`,
                         }
                       : undefined
                   }
