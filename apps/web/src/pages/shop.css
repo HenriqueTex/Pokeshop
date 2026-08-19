@@ -1021,15 +1021,6 @@
   animation: capture-blink 640ms step-end 720ms 2;
 }
 
-.capture-cart-button--success::after {
-  position: absolute;
-  z-index: 3;
-  inset: 0;
-  background: rgb(76 175 80 / 82%);
-  content: "";
-  pointer-events: none;
-}
-
 .capture-cart-button--success .capture-cart-button__center::after {
   background: #4caf50;
 }
