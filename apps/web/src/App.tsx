@@ -5,6 +5,7 @@ import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPage } from './pages/AdminPage'
 import { CatalogPage } from './pages/CatalogPage'
 import { CollectionPage } from './pages/CollectionPage'
+import { CollectionsPage } from './pages/CollectionsPage'
 import { HomePage } from './pages/HomePage'
 import { ProductPage } from './pages/ProductPage'
 import { SplashPage } from './pages/SplashPage'
@@ -25,6 +26,7 @@ export default function App() {
       <Route element={<StorefrontLayout />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/catalogo" element={<CatalogPage />} />
+        <Route path="/colecoes" element={<CollectionsPage />} />
         <Route path="/colecoes/:slug" element={<CollectionPage />} />
         <Route path="/produtos/:slug" element={<ProductPage />} />
         <Route path="/carrinho" element={<CartPage />} />

@@ -83,8 +83,7 @@ export function ShopHeader() {
             </div>
           </section>
         </div>
-        <Link to="/home#colecoes">Coleções</Link>
-        <Link to="/catalogo?type=single">Singles</Link>
+        <Link to="/colecoes">Coleções</Link>
         <Link to="/carrinho">
           Carrinho <b>{cartCount(items)}</b>
         </Link>
