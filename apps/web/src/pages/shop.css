@@ -205,14 +205,12 @@
 }
 .collection-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  min-height: 14rem;
-  padding: 1.5rem;
+  min-width: 0;
   border-radius: 1rem;
   background-color: #171717;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   color: #fff;
   text-decoration: none;
   transform-origin: center;
@@ -220,27 +218,51 @@
   will-change: transform;
 }
 
+.collection-card__visual {
+  overflow: hidden;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.collection-card__image {
+  aspect-ratio: 1.82;
+  background-color: #171717;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.collection-card__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 10rem;
+  padding: 1.1rem 1rem 1rem;
+}
+
 .collection-card:hover,
 .collection-card:focus-visible {
   transform: scale(1.015);
 }
-.collection-card span,
-.collection-card b {
+.collection-card__content span,
+.collection-card__content b {
   color: #dfb15d;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
 }
-.collection-card h3 {
-  margin: 3rem 0 0.6rem;
-  font-size: 1.35rem;
-  font-weight: 400;
+.collection-card__content h3 {
+  margin: 0.7rem 0 0.55rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
-.collection-card p {
-  min-height: 3rem;
-  margin: 0 0 1.2rem;
+.collection-card__content p {
+  margin: 0;
   color: rgb(255 255 255 / 62%);
   font-size: 0.9rem;
   line-height: 1.45;
+}
+.collection-card__content b {
+  margin-top: auto;
+  padding-top: 1rem;
 }
 .catalog-intro {
   max-width: 45rem;

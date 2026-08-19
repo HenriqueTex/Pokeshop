@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { CollectionCard } from "../components/CollectionCard";
 import { ProductCard } from "../components/ProductCard";
-import { fetchHome, mediaUrl } from "../lib/api";
+import { fetchHome } from "../lib/api";
 import "./shop.css";
 import "./home-hero.css";
 
@@ -51,31 +52,13 @@ export function HomePage() {
           </div>
         </div>
         <div className="collection-grid">
-          {home?.collections.map((collection, index) => {
-            const imageUrl = collection.imageUrl
-              ? mediaUrl(collection.imageUrl)
-              : undefined;
-
-            return (
-              <Link
-                key={collection.id}
-                to={`/colecoes/${collection.slug}`}
-                className="collection-card"
-                style={
-                  imageUrl
-                    ? {
-                        backgroundImage: `linear-gradient(rgb(0 0 0 / 62%), rgb(0 0 0 / 62%)), url(${imageUrl})`,
-                      }
-                    : undefined
-                }
-              >
-                <span>0{index + 1}</span>
-                <h3>{collection.name}</h3>
-                <p>{collection.description}</p>
-                <b>Explorar →</b>
-              </Link>
-            );
-          })}
+          {home?.collections.map((collection, index) => (
+            <CollectionCard
+              key={collection.id}
+              collection={collection}
+              index={index}
+            />
+          ))}
         </div>
       </section>
     </main>

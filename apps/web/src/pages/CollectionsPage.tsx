@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { fetchCollections, mediaUrl } from "../lib/api";
+import { CollectionCard } from "../components/CollectionCard";
+import { fetchCollections } from "../lib/api";
 import "./shop.css";
 
 export function CollectionsPage() {
@@ -29,31 +29,13 @@ export function CollectionsPage() {
           </p>
         ) : collections.length ? (
           <div className="collection-grid">
-            {collections.map((collection, index) => {
-              const imageUrl = collection.imageUrl
-                ? mediaUrl(collection.imageUrl)
-                : undefined;
-
-              return (
-                <Link
-                  key={collection.id}
-                  className="collection-card"
-                  to={`/colecoes/${collection.slug}`}
-                  style={
-                    imageUrl
-                      ? {
-                          backgroundImage: `linear-gradient(rgb(0 0 0 / 62%), rgb(0 0 0 / 62%)), url(${imageUrl})`,
-                        }
-                      : undefined
-                  }
-                >
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{collection.name}</h3>
-                  <p>{collection.description}</p>
-                  <b>Explorar →</b>
-                </Link>
-              );
-            })}
+            {collections.map((collection, index) => (
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                index={index}
+              />
+            ))}
           </div>
         ) : (
           <p className="catalog-message">Nenhuma coleção foi publicada.</p>
