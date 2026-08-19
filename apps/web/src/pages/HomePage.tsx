@@ -64,7 +64,7 @@ export function HomePage() {
                 style={
                   imageUrl
                     ? {
-                        backgroundImage: `linear-gradient(90deg, rgb(7 7 6 / 82%), rgb(7 7 6 / 32%)), linear-gradient(0deg, rgb(7 7 6 / 88%), transparent 62%), url(${imageUrl})`,
+                        backgroundImage: `url(${imageUrl})`,
                       }
                     : undefined
                 }
