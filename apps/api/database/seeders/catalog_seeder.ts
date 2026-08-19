@@ -19,6 +19,16 @@ export default class extends BaseSeeder {
         isPublished: true,
       }
     )
+    const escuridaoAbsoluta = await Collection.updateOrCreate(
+      { slug: 'escuridao-absoluta' },
+      {
+        name: 'Escuridão Absoluta',
+        description:
+          'Uma coleção envolta em mistério, com Pokémon poderosos emergindo das sombras.',
+        sortOrder: 2,
+        isPublished: true,
+      }
+    )
 
     const now = DateTime.now()
     const celebrationImage =
@@ -184,7 +194,9 @@ export default class extends BaseSeeder {
         celebrationProducts.map((product) => product.slug)
       )
       .delete()
-    await Collection.query().whereNot('slug', 'celebracao-de-30-anos').delete()
+    await Collection.query()
+      .whereNotIn('slug', [celebracao30Anos.slug, escuridaoAbsoluta.slug])
+      .delete()
 
     for (const celebrationProduct of celebrationProducts) {
       const product = await Product.updateOrCreate(
