@@ -13,7 +13,7 @@ export default class extends BaseSeeder {
       {
         name: 'Destinos de Paldea',
         description: 'Uma coleção vibrante para abrir, jogar e guardar.',
-        sortOrder: 1,
+        sortOrder: 2,
         isPublished: true,
       }
     )
@@ -22,7 +22,7 @@ export default class extends BaseSeeder {
       {
         name: 'Evoluções em Paldea',
         description: 'Uma jornada pelas evoluções que marcaram uma geração.',
-        sortOrder: 2,
+        sortOrder: 3,
         isPublished: true,
       }
     )
@@ -31,7 +31,20 @@ export default class extends BaseSeeder {
       {
         name: 'Clássicos da Triade',
         description: 'Peças selecionadas para colecionadores.',
-        sortOrder: 3,
+        sortOrder: 4,
+        isPublished: true,
+      }
+    )
+    const celebracao30Anos = await Collection.updateOrCreate(
+      { slug: 'celebracao-de-30-anos' },
+      {
+        name: 'Celebração de 30 Anos',
+        description: 'Três décadas de Pokémon celebradas em produtos especiais e cartas marcantes.',
+        imageUrl:
+          'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png',
+        bannerUrl:
+          'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png',
+        sortOrder: 1,
         isPublished: true,
       }
     )
@@ -83,6 +96,155 @@ export default class extends BaseSeeder {
     await booster.related('collections').sync([paldea.id])
     await etb.related('collections').sync([evolucoes.id])
     await binder.related('collections').sync([classicos.id])
+
+    const celebrationImage =
+      'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png'
+    const celebrationProducts = [
+      {
+        slug: 'celebracao-30-anos-blister-duplo-com-moeda',
+        name: 'Celebração de 30 Anos — Blister Duplo com Moeda',
+        description: 'Dois boosters da Celebração de 30 Anos, carta promocional e moeda Pokémon.',
+        priceCents: 6999,
+        productType: 'blister',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-blister-triplo-com-adesivo',
+        name: 'Celebração de 30 Anos — Blister Triplo com Adesivo',
+        description: 'Três boosters da coleção acompanhados de uma cartela de adesivos.',
+        priceCents: 9999,
+        productType: 'blister',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-treinador-avancado',
+        name: 'Celebração de 30 Anos — Coleção Treinador Avançado',
+        description:
+          'Nove boosters, acessórios de jogo, protetores, moeda e carta para o Pokémon TCG Live.',
+        priceCents: 39999,
+        productType: 'elite-trainer-box',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-com-poster',
+        name: 'Celebração de 30 Anos — Box com Pôster',
+        description: 'Box com pôster e cartas promocionais dos três pássaros lendários de Kanto.',
+        priceCents: 11599,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-colecao-com-fichario',
+        name: 'Celebração de 30 Anos — Box Coleção com Fichário',
+        description: 'Fichário de nove bolsos e boosters da coleção para começar a sua celebração.',
+        priceCents: 23099,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-ex-sylveon',
+        name: 'Celebração de 30 Anos — Box ex Sylveon ex',
+        description:
+          'Carta promocional Sylveon ex, carta extragrande e boosters da Celebração de 30 Anos.',
+        priceCents: 16999,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-ex-greninja',
+        name: 'Celebração de 30 Anos — Box ex Greninja ex',
+        description:
+          'Carta promocional Greninja ex, carta extragrande e boosters da Celebração de 30 Anos.',
+        priceCents: 16999,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-09-16'),
+      },
+      {
+        slug: 'celebracao-30-anos-combo-de-booster',
+        name: 'Celebração de 30 Anos — Combo de Booster',
+        description: 'Seis boosters da Celebração de 30 Anos para ampliar sua coleção.',
+        priceCents: 19999,
+        productType: 'booster-box',
+        releaseDate: DateTime.fromISO('2026-10-02'),
+      },
+      {
+        slug: 'celebracao-30-anos-baralho-de-batalha-espeon-ex',
+        name: 'Celebração de 30 Anos — Baralho de Batalha Espeon ex',
+        description: 'Baralho laminado de 60 cartas com Espeon ex, moeda e deckbox.',
+        priceCents: 11599,
+        productType: 'deck',
+        releaseDate: DateTime.fromISO('2026-10-30'),
+      },
+      {
+        slug: 'celebracao-30-anos-baralho-de-batalha-umbreon-ex',
+        name: 'Celebração de 30 Anos — Baralho de Batalha Umbreon ex',
+        description: 'Baralho laminado de 60 cartas com Umbreon ex, moeda e deckbox.',
+        priceCents: 11599,
+        productType: 'deck',
+        releaseDate: DateTime.fromISO('2026-10-30'),
+      },
+      {
+        slug: 'celebracao-30-anos-minilata',
+        name: 'Celebração de 30 Anos — Minilata',
+        description:
+          'Minilata colecionável, disponível em dez estampas, com boosters e itens extras.',
+        priceCents: 7799,
+        productType: 'tin',
+        releaseDate: DateTime.fromISO('2026-11-06'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-colecao-com-miniatura-mewtwo',
+        name: 'Celebração de 30 Anos — Box Coleção com Miniatura Mewtwo',
+        description:
+          'Box com carta promocional, carta extragrande, miniatura de Mewtwo e cinco boosters.',
+        priceCents: 24599,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-11-06'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-colecao-com-miniatura-mew',
+        name: 'Celebração de 30 Anos — Box Coleção com Miniatura Mew',
+        description:
+          'Box com carta promocional, carta extragrande, miniatura de Mew e cinco boosters.',
+        priceCents: 24599,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-11-06'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-colecao-premium-ditto',
+        name: 'Celebração de 30 Anos — Box Coleção Premium Porta-Retrato Ditto',
+        description:
+          'Coleção premium com display de Ditto e oito boosters da Celebração de 30 Anos.',
+        priceCents: 30599,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-11-06'),
+      },
+      {
+        slug: 'celebracao-30-anos-box-colecao',
+        name: 'Celebração de 30 Anos — Box Coleção',
+        description:
+          'A coleção de ponta nacional com 19 boosters, booster especial clássico, promos e organizadores.',
+        priceCents: 59999,
+        productType: 'collection-box',
+        releaseDate: DateTime.fromISO('2026-11-06'),
+      },
+    ]
+
+    for (const celebrationProduct of celebrationProducts) {
+      const product = await Product.updateOrCreate(
+        { slug: celebrationProduct.slug },
+        {
+          ...celebrationProduct,
+          coverImageUrl: celebrationImage,
+          stock: 10,
+          status: 'published',
+          isFeatured: celebrationProduct.slug === 'celebracao-30-anos-treinador-avancado',
+          publishedAt: now,
+        }
+      )
+
+      await product.related('collections').sync([celebracao30Anos.id])
+    }
 
     await PromotionalBanner.updateOrCreate(
       { title: 'O próximo capítulo da sua coleção' },
