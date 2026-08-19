@@ -11,6 +11,7 @@ const productValidator = vine.compile(
     description: vine.string().trim().maxLength(5000).optional(),
     priceCents: vine.number().min(0).withoutDecimals(),
     stock: vine.number().min(0).withoutDecimals(),
+    availability: vine.enum(['in_stock', 'pre_sale', 'sold_out'] as const),
     status: vine.enum(['draft', 'published', 'archived'] as const),
     productType: vine.string().trim().minLength(2).maxLength(80),
     coverImageUrl: vine.string().trim().url().maxLength(2000).optional(),

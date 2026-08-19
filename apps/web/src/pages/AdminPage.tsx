@@ -34,6 +34,7 @@ const productDraft: AdminProductInput = {
   description: "",
   priceCents: 0,
   stock: 0,
+  availability: "in_stock",
   status: "draft",
   productType: "booster",
   coverImageUrl: "",
@@ -66,6 +67,7 @@ function toProductInput(product: Product): AdminProductInput {
     description: product.description ?? "",
     priceCents: product.priceCents,
     stock: product.stock,
+    availability: product.availability,
     status: product.status ?? "draft",
     productType: product.productType,
     coverImageUrl: product.coverImageUrl ?? "",
@@ -114,7 +116,10 @@ function ImageUpload({
     <div className="admin-image-upload">
       <label>
         {label} (URL ou caminho)
-        <input value={value} onChange={(event) => onChange(event.target.value)} />
+        <input
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+        />
       </label>
       <label className="admin-upload-control">
         Enviar arquivo local
@@ -393,6 +398,23 @@ function ProductsManager({
               }
               required
             />
+          </label>
+          <label>
+            Disponibilidade
+            <select
+              value={form.availability}
+              onChange={(event) =>
+                setForm({
+                  ...form,
+                  availability: event.target
+                    .value as AdminProductInput["availability"],
+                })
+              }
+            >
+              <option value="in_stock">Em estoque</option>
+              <option value="pre_sale">Pré-venda</option>
+              <option value="sold_out">Esgotado</option>
+            </select>
           </label>
           <label>
             Tipo

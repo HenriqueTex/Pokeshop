@@ -24,6 +24,9 @@ export default class Product extends BaseModel {
   declare stock: number
 
   @column()
+  declare availability: 'in_stock' | 'pre_sale' | 'sold_out'
+
+  @column()
   declare status: 'draft' | 'published' | 'archived'
 
   @column()

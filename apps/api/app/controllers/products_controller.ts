@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Product from '#models/product'
 
 const maxPageSize = 48
+const availabilityValues = ['in_stock', 'pre_sale', 'sold_out'] as const
 
 function positiveInteger(value: unknown, fallback: number, maximum: number) {
   const parsed = Number.parseInt(String(value), 10)
@@ -26,7 +27,7 @@ export default class ProductsController {
     const queryText = textInput(request.input('q'))
     const collection = textInput(request.input('collection'))
     const productType = textInput(request.input('type'), 80)
-    const availability = request.input('availability')
+    const availability = textInput(request.input('availability'), 20)
     const minPrice = nonNegativeInteger(request.input('minPrice'))
     const maxPrice = nonNegativeInteger(request.input('maxPrice'))
     const sort = request.input('sort')
@@ -46,7 +47,12 @@ export default class ProductsController {
         collectionsQuery.where('slug', collection).where('is_published', true)
       })
     }
-    if (availability === 'in-stock') productsQuery.where('stock', '>', 0)
+    if (
+      availability &&
+      availabilityValues.includes(availability as (typeof availabilityValues)[number])
+    ) {
+      productsQuery.where('availability', availability)
+    }
     if (minPrice !== undefined) productsQuery.where('price_cents', '>=', minPrice)
     if (maxPrice !== undefined) productsQuery.where('price_cents', '<=', maxPrice)
 

@@ -187,6 +187,10 @@ export default class extends BaseSeeder {
       'celebracao-30-anos-box-com-poster',
       'celebracao-30-anos-combo-de-booster',
     ])
+    const productAvailability: Record<string, 'pre_sale' | 'sold_out'> = {
+      'celebracao-30-anos-box-com-poster': 'sold_out',
+      'celebracao-30-anos-combo-de-booster': 'pre_sale',
+    }
 
     await Product.query()
       .whereNotIn(
@@ -199,12 +203,14 @@ export default class extends BaseSeeder {
       .delete()
 
     for (const celebrationProduct of celebrationProducts) {
+      const availability = productAvailability[celebrationProduct.slug] ?? 'in_stock'
       const product = await Product.updateOrCreate(
         { slug: celebrationProduct.slug },
         {
           ...celebrationProduct,
           coverImageUrl: celebrationProductImages[celebrationProduct.slug] ?? celebrationImage,
-          stock: 10,
+          stock: availability === 'sold_out' ? 0 : 10,
+          availability,
           status: 'published',
           isFeatured: featuredProductSlugs.has(celebrationProduct.slug),
           publishedAt: now,

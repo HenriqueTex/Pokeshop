@@ -16,6 +16,7 @@ export type Product = {
   description: string | null;
   priceCents: number;
   stock: number;
+  availability: "in_stock" | "pre_sale" | "sold_out";
   status?: "draft" | "published" | "archived";
   productType: string;
   coverImageUrl: string | null;
@@ -76,6 +77,7 @@ export type AdminProductInput = {
   description?: string;
   priceCents: number;
   stock: number;
+  availability: Product["availability"];
   status: "draft" | "published" | "archived";
   productType: string;
   coverImageUrl?: string;

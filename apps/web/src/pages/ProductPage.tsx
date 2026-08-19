@@ -13,6 +13,8 @@ export function ProductPage() {
   });
   const add = useCartStore((state) => state.add);
   const product = productQuery.data?.data;
+  const soldOut = product?.availability === "sold_out" || product?.stock === 0;
+  const isPreSale = product?.availability === "pre_sale";
   const imageUrl = product?.coverImageUrl
     ? mediaUrl(product.coverImageUrl)
     : undefined;
@@ -75,9 +77,11 @@ export function ProductPage() {
               {formatPrice(product.priceCents)}
             </strong>
             <p className="product-detail__stock">
-              {product.stock > 0
-                ? `${product.stock} unidades disponíveis`
-                : "Esgotado"}
+              {soldOut
+                ? "Esgotado"
+                : isPreSale
+                  ? "Pré-venda — reserve o seu agora"
+                  : `${product.stock} unidades disponíveis`}
             </p>
             {product.description && (
               <p className="product-detail__description">
@@ -87,12 +91,14 @@ export function ProductPage() {
             <button
               className="product-detail__action"
               type="button"
-              disabled={product.stock === 0}
+              disabled={soldOut}
               onClick={() => add(product)}
             >
-              {product.stock === 0
+              {soldOut
                 ? "Item esgotado"
-                : "Adicionar ao carrinho →"}
+                : isPreSale
+                  ? "Reservar na pré-venda →"
+                  : "Adicionar ao carrinho →"}
             </button>
             <Link className="product-detail__back" to="/catalogo">
               ← Continuar explorando

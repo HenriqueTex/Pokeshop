@@ -6,7 +6,8 @@ import { useCartStore } from "../lib/cart";
 
 export function ProductCard({ product }: { product: Product }) {
   const add = useCartStore((state) => state.add);
-  const soldOut = product.stock === 0;
+  const soldOut = product.availability === "sold_out" || product.stock === 0;
+  const isPreSale = product.availability === "pre_sale";
   const imageUrl = product.coverImageUrl
     ? mediaUrl(product.coverImageUrl)
     : undefined;
@@ -46,7 +47,11 @@ export function ProductCard({ product }: { product: Product }) {
           onClick={() => add(product)}
           whileTap={{ scale: 0.96 }}
         >
-          {soldOut ? "Esgotado" : "Adicionar ao carrinho"}
+          {soldOut
+            ? "Esgotado"
+            : isPreSale
+              ? "Reservar na pré-venda"
+              : "Adicionar ao carrinho"}
         </motion.button>
       </div>
       <div className="product-card__content">
@@ -60,7 +65,11 @@ export function ProductCard({ product }: { product: Product }) {
           <Link to={`/produtos/${product.slug}`}>{product.name}</Link>
         </h3>
         <p className="product-card__availability">
-          {soldOut ? "Indisponível" : `${product.stock} em estoque`}
+          {soldOut
+            ? "Esgotado"
+            : isPreSale
+              ? "Pré-venda"
+              : `${product.stock} em estoque`}
         </p>
       </div>
     </motion.article>
