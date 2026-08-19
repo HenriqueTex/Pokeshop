@@ -9,7 +9,9 @@ export function ShopHeader() {
       <Link className="shop-logo" to="/home">Triade Arte <span>Pokémon Store</span></Link>
       <nav aria-label="Navegação principal">
         <Link to="/home">Home</Link>
-        <Link to="/catalogo">Catálogo</Link>
+        <Link to="/catalogo">Produtos</Link>
+        <Link to="/home#colecoes">Coleções</Link>
+        <Link to="/catalogo?type=single">Singles</Link>
         <Link to="/carrinho">Carrinho <b>{cartCount(items)}</b></Link>
       </nav>
     </header>
