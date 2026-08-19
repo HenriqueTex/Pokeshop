@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080808" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <title>Triade Arte | Pokémon</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #080808;
+        color: #fff;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { margin: 0; min-height: 100%; }
+
+      body { overflow: hidden; }
+
+      .screen {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .splash__video {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: opacity 180ms ease-out;
+      }
+
+      .splash__final-frame {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0;
+        transition: opacity 180ms ease-out;
+      }
+
+      .splash.is-finished .splash__video { opacity: 0; }
+      .splash.is-finished .splash__final-frame { opacity: 1; }
+
+      .fluid-canvas {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.82;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      .splash::after {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        content: "";
+        background: linear-gradient(180deg, rgb(0 0 0 / 18%), rgb(0 0 0 / 48%));
+        pointer-events: none;
+      }
+
+      .splash__content {
+        position: relative;
+        z-index: 3;
+        align-self: start;
+        justify-self: start;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: calc(33.333vw - clamp(24px, 6vw, 88px));
+        padding: 32px;
+        margin-top: clamp(80px, 14vh, 144px);
+        margin-left: clamp(24px, 6vw, 88px);
+        padding-left: 0;
+        text-align: left;
+      }
+
+      .brand {
+        margin: 0;
+        font-size: clamp(3.25rem, 6.3vw, 6.75rem);
+        font-weight: 400;
+        letter-spacing: -0.055em;
+        line-height: 0.9;
+        text-shadow: 0 2px 24px rgb(0 0 0 / 24%);
+        white-space: nowrap;
+        width: max-content;
+        animation: reveal-title 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .brand span {
+        display: block;
+        font-size: 0.24em;
+        font-weight: 500;
+        letter-spacing: 0.42em;
+        line-height: 1;
+        width: max-content;
+        margin: 0.72em auto 0;
+        text-transform: uppercase;
+      }
+
+      .enter {
+        position: absolute;
+        z-index: 1;
+        top: calc(65vh - clamp(80px, 14vh, 144px));
+        left: 50%;
+        transform: translateX(-50%);
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 12px 2px 10px;
+        border-bottom: 1px solid rgb(255 255 255 / 72%);
+        color: #fff;
+        font-size: clamp(0.83rem, 1.5vw, 1rem);
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+        visibility: hidden;
+        opacity: 0;
+        transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+      }
+
+      .enter.is-revealed {
+        visibility: visible;
+        animation: reveal-cta 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .enter::after {
+        margin-left: 12px;
+        content: "→";
+        font-size: 1.3em;
+        line-height: 1;
+        transition: transform 180ms ease;
+      }
+
+      .enter:hover { border-color: #fff; transform: translate(-50%, -2px); }
+      .enter:hover::after { transform: translateX(4px); }
+      .enter:focus-visible { outline: 2px solid #fff; outline-offset: 8px; }
+
+      .sound-toggle {
+        position: absolute;
+        z-index: 3;
+        bottom: 24px;
+        left: 24px;
+        min-height: 44px;
+        padding: 10px 0;
+        border: 0;
+        border-bottom: 1px solid rgb(255 255 255 / 62%);
+        background: transparent;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .sound-toggle:hover { border-color: #fff; }
+      .sound-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+
+      .play-fallback {
+        position: absolute;
+        z-index: 4;
+        right: 24px;
+        bottom: 24px;
+        min-height: 44px;
+        padding: 10px 0;
+        border: 0;
+        border-bottom: 1px solid rgb(255 255 255 / 72%);
+        background: transparent;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .play-fallback:hover { border-color: #fff; }
+      .play-fallback:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+
+      .store {
+        display: none;
+        background: #101010;
+      }
+
+      .store__content { padding: 32px; text-align: center; animation: reveal 700ms ease-out both; }
+      .store h2 { margin: 0; font-size: clamp(2rem, 6vw, 4.5rem); font-weight: 400; letter-spacing: -0.05em; }
+      .store p { margin: 18px 0 0; color: rgb(255 255 255 / 72%); font-size: 1rem; letter-spacing: 0.04em; }
+
+      @keyframes reveal {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes reveal-title {
+        from { opacity: 0; filter: blur(8px); transform: translateY(22px) scale(0.985); }
+        to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+      }
+
+      @keyframes reveal-cta {
+        from { opacity: 0; filter: blur(6px); transform: translate(-58%, 0); }
+        to { opacity: 1; filter: blur(0); transform: translateX(-50%); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        .fluid-canvas { display: none; }
+      }
+
+      @media (pointer: coarse) {
+        .fluid-canvas { display: none; }
+      }
+
+      @media (max-width: 900px) {
+        .splash__content {
+          align-self: center;
+          justify-self: center;
+          align-items: center;
+          width: auto;
+          padding: 32px;
+          margin-top: 0;
+          margin-left: 0;
+          text-align: center;
+        }
+
+        .brand {
+          font-size: clamp(3.25rem, 10vw, 6.75rem);
+          white-space: normal;
+          width: auto;
+        }
+
+        .enter {
+          position: fixed;
+          z-index: 3;
+          top: 65vh;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .enter:hover { transform: translate(-50%, -2px); }
+
+        .play-fallback {
+          right: 50%;
+          bottom: 24px;
+          transform: translateX(50%);
+        }
+      }
+
+      body:has(#loja:target) .splash { display: none; }
+      body:has(#loja:target) .store { display: grid; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="screen splash" aria-labelledby="titulo-principal">
+        <img class="splash__final-frame" src="FinalFrame.jpeg" alt="" aria-hidden="true" />
+        <video class="splash__video" autoplay muted playsinline webkit-playsinline preload="auto" poster="FinalFrame.jpeg" aria-hidden="true">
+          <source src="Gere_um_video_nesse_estlio_de.mp4" type="video/mp4" />
+        </video>
+        <button class="play-fallback" type="button" hidden>Toque para iniciar →</button>
+        <script>
+          const bootVideo = document.querySelector(".splash__video");
+          const playFallback = document.querySelector(".play-fallback");
+
+          const bootAutoplay = () => {
+            bootVideo.defaultMuted = true;
+            bootVideo.muted = true;
+            bootVideo.setAttribute("muted", "");
+            bootVideo.setAttribute("playsinline", "");
+            bootVideo.setAttribute("webkit-playsinline", "");
+
+            const playAttempt = bootVideo.play();
+            if (!playAttempt) return;
+
+            playAttempt.then(() => {
+              playFallback.hidden = true;
+            }).catch(() => {
+              playFallback.hidden = false;
+            });
+          };
+
+          ["loadedmetadata", "loadeddata", "canplay"].forEach((eventName) => {
+            bootVideo.addEventListener(eventName, bootAutoplay, { once: true });
+          });
+          document.addEventListener("touchstart", bootAutoplay, { once: true, passive: true });
+          playFallback.addEventListener("click", bootAutoplay);
+          bootAutoplay();
+        </script>
+        <canvas class="fluid-canvas" id="fluid" aria-hidden="true"></canvas>
+        <div class="splash__content">
+          <h1 class="brand" id="titulo-principal">Triade Arte<span>Pokémon Store</span></h1>
+          <a class="enter" href="#loja">Sua aventura começa aqui</a>
+        </div>
+        <button class="sound-toggle" type="button" aria-pressed="false">Ativar som</button>
+      </section>
+
+      <section class="screen store" id="loja" aria-labelledby="titulo-loja">
+        <div class="store__content">
+          <h2 id="titulo-loja">Bem-vindo à Triade Arte</h2>
+          <p>Descubra itens que tornam cada aventura única.</p>
+        </div>
+      </section>
+    </main>
+    <script type="module">
+      import useFluidCursor from "./fluid-cursor.js";
+
+      const splash = document.querySelector(".splash");
+      const video = document.querySelector(".splash__video");
+      const soundToggle = document.querySelector(".sound-toggle");
+      const enter = document.querySelector(".enter");
+      const playFallback = document.querySelector(".play-fallback");
+
+      const canUseFluidCursor = window.matchMedia("(pointer: fine)").matches
+        && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const fluidCursor = canUseFluidCursor ? useFluidCursor() : null;
+      let isEnterRevealed = false;
+      let revealFallbackId;
+
+      video.defaultMuted = true;
+      video.muted = true;
+
+      const revealEnter = () => {
+        if (isEnterRevealed) return;
+
+        isEnterRevealed = true;
+        window.clearTimeout(revealFallbackId);
+        splash.classList.add("is-finished");
+        soundToggle.hidden = true;
+
+        const bounds = enter.getBoundingClientRect();
+        enter.classList.add("is-revealed");
+        fluidCursor?.playTrail(
+          bounds.left - 64,
+          bounds.top + bounds.height / 2,
+          bounds.right + 48,
+          bounds.top + bounds.height / 2,
+        );
+      };
+
+      const startVideo = () => {
+        if (isEnterRevealed) return;
+
+        video.play().then(() => {
+          playFallback.hidden = true;
+        }).catch(() => {
+          playFallback.hidden = false;
+        });
+      };
+
+      const scheduleEnterFallback = () => {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+
+        window.clearTimeout(revealFallbackId);
+        revealFallbackId = window.setTimeout(revealEnter, video.duration * 1000 + 400);
+      };
+
+      soundToggle.addEventListener("click", async () => {
+        video.muted = !video.muted;
+
+        if (!video.muted) {
+          await video.play();
+        }
+
+        soundToggle.setAttribute("aria-pressed", String(!video.muted));
+        soundToggle.textContent = video.muted ? "Ativar som" : "Desativar som";
+      });
+
+      playFallback.addEventListener("click", startVideo);
+
+      video.addEventListener("loadedmetadata", scheduleEnterFallback);
+      video.addEventListener("canplay", startVideo, { once: true });
+      video.addEventListener("timeupdate", () => {
+        if (video.currentTime >= video.duration - 0.15) revealEnter();
+      });
+      video.addEventListener("ended", revealEnter);
+      window.addEventListener("pageshow", startVideo);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) startVideo();
+      });
+
+      startVideo();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+# Dependencies and package manager caches
+node_modules/
+**/node_modules/
+.npm/
+.pnpm-store/
+
+# Build output and runtime artifacts
+dist/
+**/dist/
+build/
+**/build/
+coverage/
+**/coverage/
+tmp/
+**/tmp/
+*.tsbuildinfo
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Local database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tooling and editor files
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# npm workspaces use the root lockfile
+apps/*/package-lock.json
