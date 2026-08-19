@@ -31,17 +31,19 @@ export function ProductCard({ product }: { product: Product }) {
         aria-label={`Ver ${product.name}`}
         style={imageStyle}
       />
-      <p className="product-card__collection">
-        {product.collections[0]?.name ?? "Triade Arte"}
-      </p>
-      <h3>
-        <Link to={`/produtos/${product.slug}`}>{product.name}</Link>
-      </h3>
-      <div className="product-card__bottom">
-        <strong>{formatPrice(product.priceCents)}</strong>
-        <button type="button" disabled={soldOut} onClick={() => add(product)}>
-          {soldOut ? "Esgotado" : "Adicionar"}
-        </button>
+      <div className="product-card__content">
+        <p className="product-card__collection">
+          {product.collections[0]?.name ?? "Triade Arte"}
+        </p>
+        <h3>
+          <Link to={`/produtos/${product.slug}`}>{product.name}</Link>
+        </h3>
+        <div className="product-card__bottom">
+          <strong>{formatPrice(product.priceCents)}</strong>
+          <button type="button" disabled={soldOut} onClick={() => add(product)}>
+            {soldOut ? "Esgotado" : "Adicionar"}
+          </button>
+        </div>
       </div>
     </article>
   );
