@@ -174,13 +174,8 @@ export default class extends BaseSeeder {
     ]
     const featuredProductSlugs = new Set([
       'celebracao-30-anos-treinador-avancado',
-      'celebracao-30-anos-blister-duplo-com-moeda',
       'celebracao-30-anos-box-com-poster',
-      'celebracao-30-anos-box-colecao-com-fichario',
-      'celebracao-30-anos-box-ex-sylveon',
       'celebracao-30-anos-combo-de-booster',
-      'celebracao-30-anos-minilata',
-      'celebracao-30-anos-box-colecao-com-miniatura-mewtwo',
     ])
 
     await Product.query()
