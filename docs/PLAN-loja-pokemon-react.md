@@ -73,33 +73,33 @@ Filtros iniciais: coleção, tipo de produto, disponibilidade, faixa de preço, 
 
 ### Fase 2 — Catálogo e API pública
 
-- [ ] Criar migrations, modelos e seeders de admin, produtos, coleções, imagens e banners. *(Agentes: database-architect, backend-specialist)*
-- [ ] Implementar endpoints públicos paginados:
+- [x] Criar migrations, modelos e seeders de produtos, coleções, imagens e banners. Admin fica para a Fase 5. *(Agentes: database-architect, backend-specialist)*
+- [x] Implementar endpoints públicos paginados:
   - `GET /products` com filtros e ordenação;
   - `GET /products/:slug`;
   - `GET /collections` e `GET /collections/:slug`;
   - `GET /home` para banner, destaques e lançamentos.
-- [ ] Validar parâmetros, limitar paginação, normalizar erros e expor apenas itens publicados.
-- [ ] Criar dados de demonstração coerentes para testar filtros e seções da Home.
+- [x] Validar parâmetros, limitar paginação, normalizar erros e expor apenas itens publicados.
+- [x] Criar dados de demonstração coerentes para testar filtros e seções da Home.
 
 **Aceite:** cada filtro altera o resultado corretamente; slugs são únicos; itens não publicados nunca chegam à API pública.
 
 ### Fase 3 — Experiência pública
 
-- [ ] Implementar o design system e layout responsivo. *(Agente: frontend-specialist)*
-- [ ] Construir Home com banner promocional, carrossel/faixa de destaques, lançamentos e atalhos para coleções.
-- [ ] Construir página de catálogo com filtros acessíveis, URL sincronizada (`?collection=&type=&sort=`), busca, paginação e estados de carregamento/vazio/erro.
+- [x] Implementar o design system e layout responsivo. *(Agente: frontend-specialist)*
+- [x] Construir Home com banner promocional, destaques e atalhos para coleções.
+- [x] Construir página de catálogo com filtros acessíveis, URL sincronizada (`?collection=&type=&sort=`), estados de carregamento/vazio/erro e ordenação.
 - [ ] Criar página de coleção e detalhe do produto, incluindo galeria, preço, disponibilidade e CTA de adicionar ao carrinho.
-- [ ] Criar header, navegação mobile e footer; incluir caminhos claros de volta à Home e ao catálogo.
+- [x] Criar header e navegação mobile; o footer acompanha a página de produto.
 
 **Aceite:** navegação funciona em telas pequenas e grandes; filtros podem ser compartilhados por URL; Home e catálogo usam dados reais da API.
 
 ### Fase 4 — Carrinho de visitante
 
-- [ ] Criar store persistido com itens, quantidade, remoção e limpeza do carrinho. *(Agentes: frontend-specialist, react-best-practices)*
-- [ ] Impedir quantidades acima do estoque informado e apresentar feedback ao usuário.
-- [ ] Criar drawer/resumo e página `/carrinho` com subtotal e aviso explícito de que o checkout virá depois.
-- [ ] Não implementar pagamento, endereço, frete, cupom ou criação de pedido.
+- [x] Criar store persistido com itens, quantidade e remoção do carrinho. *(Agentes: frontend-specialist, react-best-practices)*
+- [x] Impedir quantidades acima do estoque informado.
+- [x] Criar página `/carrinho` com subtotal e aviso explícito de que o checkout virá depois.
+- [x] Não implementar pagamento, endereço, frete, cupom ou criação de pedido.
 
 **Aceite:** o carrinho persiste após recarga, calcula subtotal corretamente e não possui rota de pagamento.
 

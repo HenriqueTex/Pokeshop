@@ -1,31 +1,22 @@
+import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import './home.css'
+import { ProductCard } from '../components/ProductCard'
+import { fetchHome } from '../lib/api'
+import { cartCount, useCartStore } from '../lib/cart'
+import './shop.css'
 
 export function HomePage() {
+  const homeQuery = useQuery({ queryKey: ['home'], queryFn: fetchHome })
+  const items = useCartStore((state) => state.items)
+  const home = homeQuery.data?.data
+  const banner = home?.banners[0]
+
   return (
-    <main className="home">
-      <header className="home__header">
-        <Link className="home__logo" to="/home">Triade Arte <span>Pokémon Store</span></Link>
-        <nav aria-label="Navegação principal"><a href="#destaques">Destaques</a><a href="#lancamentos">Lançamentos</a><a href="#colecoes">Coleções</a></nav>
-        <button className="home__cart" type="button">Carrinho <span>0</span></button>
-      </header>
-
-      <section className="home__hero" aria-labelledby="home-title">
-        <p className="home__eyebrow">Triade Arte · Pokémon Store</p>
-        <h1 id="home-title">Sua próxima descoberta está aqui.</h1>
-        <p>O catálogo, filtros e carrinho estão sendo preparados para a sua coleção.</p>
-        <a className="home__cta" href="#destaques">Explorar destaques <span aria-hidden="true">→</span></a>
-      </section>
-
-      <section className="home__section" id="destaques" aria-labelledby="destaques-title">
-        <p className="home__eyebrow">Em breve</p>
-        <h2 id="destaques-title">Destaques da semana</h2>
-        <div className="home__cards">
-          <article><span>01</span><h3>Cartas raras</h3><p>Seleção curada para colecionadores.</p></article>
-          <article><span>02</span><h3>Boosters</h3><p>Novas expansões e clássicos.</p></article>
-          <article><span>03</span><h3>Acessórios</h3><p>Proteção à altura da coleção.</p></article>
-        </div>
-      </section>
+    <main className="shop-page">
+      <header className="shop-header"><Link className="shop-logo" to="/home">Triade Arte <span>Pokémon Store</span></Link><nav><Link to="/home">Home</Link><Link to="/catalogo">Catálogo</Link><Link to="/carrinho">Carrinho <b>{cartCount(items)}</b></Link></nav></header>
+      <section className="home-banner"><div><p className="eyebrow">Triade Arte · Pokémon Store</p><h1>{banner?.title ?? 'Sua próxima descoberta está aqui.'}</h1><p>{banner?.subtitle ?? 'Coleções especiais, itens raros e novas aventuras.'}</p><Link className="gold-link" to={banner?.ctaUrl ?? '/catalogo'}>{banner?.ctaLabel ?? 'Explorar catálogo'} <span>→</span></Link></div></section>
+      <section className="shop-section"><div className="section-heading"><div><p className="eyebrow">Curadoria da semana</p><h2>Destaques</h2></div><Link to="/catalogo">Ver catálogo →</Link></div>{homeQuery.isPending ? <p className="catalog-message">Carregando destaques…</p> : <div className="product-grid">{home?.featured.map((product) => <ProductCard key={product.id} product={product} />)}</div>}</section>
+      <section className="shop-section"><div className="section-heading"><div><p className="eyebrow">Para continuar explorando</p><h2>Coleções</h2></div></div><div className="collection-grid">{home?.collections.map((collection, index) => <Link key={collection.id} to={`/catalogo?collection=${collection.slug}`} className="collection-card"><span>0{index + 1}</span><h3>{collection.name}</h3><p>{collection.description}</p><b>Explorar →</b></Link>)}</div></section>
     </main>
   )
 }

@@ -9,7 +9,10 @@ import env from '#start/env'
  */
 const corsConfig = defineConfig({
   enabled: true,
-  origin: [env.get('WEB_ORIGIN')],
+  origin: env
+    .get('WEB_ORIGIN')
+    .split(',')
+    .map((origin) => origin.trim()),
   methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
   headers: true,
   exposeHeaders: [],
