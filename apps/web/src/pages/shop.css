@@ -798,6 +798,10 @@
   }
 }
 
+.catalog-page {
+  padding-top: 0;
+}
+
 .catalog-page .catalog-intro {
   position: relative;
   isolation: isolate;
