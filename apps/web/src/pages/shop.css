@@ -224,9 +224,7 @@
   position: absolute;
   z-index: 0;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgb(7 7 6 / 82%), rgb(7 7 6 / 32%)),
-    linear-gradient(0deg, rgb(7 7 6 / 88%), transparent 62%);
+  background: rgb(7 7 6 / 70%);
   content: "";
   pointer-events: none;
 }
