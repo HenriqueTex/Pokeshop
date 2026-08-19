@@ -205,8 +205,10 @@
 }
 .collection-card {
   position: relative;
+  overflow: hidden;
   min-height: 14rem;
   padding: 1.5rem;
+  border-radius: 1rem;
   background-color: #171717;
   background-position: center;
   background-repeat: no-repeat;
