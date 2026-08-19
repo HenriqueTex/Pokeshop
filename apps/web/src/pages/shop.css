@@ -7,7 +7,8 @@
       rgb(182 128 34 / 14%),
       transparent 22rem
     ),
-    #0a0a0a;
+    var(--page-background),
+    #000;
 }
 .shop-header {
   display: flex;
