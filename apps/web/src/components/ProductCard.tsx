@@ -32,9 +32,7 @@ export function ProductCard({ product }: { product: Product }) {
         to={`/produtos/${product.slug}`}
         aria-label={`Ver ${product.name}`}
         style={imageStyle}
-      >
-        <span>{product.productType.replaceAll("-", " ")}</span>
-      </Link>
+      />
       <p className="product-card__collection">
         {product.collections[0]?.name ?? "Triade Arte"}
       </p>

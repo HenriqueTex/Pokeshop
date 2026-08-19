@@ -52,9 +52,7 @@ export function ProductPage() {
             className="product-gallery"
             aria-label={`Galeria de ${product.name}`}
           >
-            <div className="product-gallery__main" style={imageStyle}>
-              <span>{product.productType.replaceAll("-", " ")}</span>
-            </div>
+            <div className="product-gallery__main" style={imageStyle} />
             {product.images && product.images.length > 1 && (
               <div className="product-gallery__thumbs">
                 {product.images.map((image, index) => (
