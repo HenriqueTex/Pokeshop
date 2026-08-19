@@ -25,6 +25,8 @@ export default class extends BaseSeeder {
         name: 'Escuridão Absoluta',
         description:
           'Uma coleção envolta em mistério, com Pokémon poderosos emergindo das sombras.',
+        imageUrl: '/media/escuridao%20absoluta/escurida-absoluta.png',
+        bannerUrl: '/media/escuridao%20absoluta/escurida-absoluta.png',
         sortOrder: 2,
         isPublished: true,
       }
@@ -182,6 +184,48 @@ export default class extends BaseSeeder {
         releaseDate: DateTime.fromISO('2026-11-06'),
       },
     ]
+    const escuridaoAbsolutaProducts = [
+      {
+        slug: 'escuridao-absoluta-expositor-de-boosters',
+        name: 'Escuridão Absoluta — Expositor de Pacotes de Booster',
+        description:
+          'Expositor com 36 pacotes de booster de Megaevolução — Escuridão Absoluta, com seis cartas em cada pacote.',
+        priceCents: 32999,
+        productType: 'booster-box',
+        releaseDate: DateTime.fromISO('2026-07-17'),
+        coverImageUrl: '/media/escuridao%20absoluta/booster-display-box-br.avif',
+      },
+      {
+        slug: 'escuridao-absoluta-treinador-avancado',
+        name: 'Escuridão Absoluta — Coleção Treinador Avançado',
+        description:
+          'Vinte boosters, carta promocional de Zarude, capas, dados, marcadores e caixa de colecionador.',
+        priceCents: 39999,
+        productType: 'elite-trainer-box',
+        releaseDate: DateTime.fromISO('2026-07-17'),
+        coverImageUrl: '/media/escuridao%20absoluta/elite-trainer-box-br.avif',
+      },
+      {
+        slug: 'escuridao-absoluta-desafio-estrategico',
+        name: 'Escuridão Absoluta — Coleção Desafio Estratégico',
+        description:
+          'Baralho de 40 cartas pronto para o pré-lançamento, carta promocional e oito pacotes de booster.',
+        priceCents: 14999,
+        productType: 'pre-release',
+        releaseDate: DateTime.fromISO('2026-07-17'),
+        coverImageUrl: '/media/escuridao%20absoluta/build-battle-box-br.avif',
+      },
+      {
+        slug: 'escuridao-absoluta-combo-de-boosters',
+        name: 'Escuridão Absoluta — Combo de Pacotes de Booster',
+        description:
+          'Combo com 18 pacotes de booster de Megaevolução — Escuridão Absoluta para ampliar sua coleção.',
+        priceCents: 19999,
+        productType: 'booster-box',
+        releaseDate: DateTime.fromISO('2026-07-17'),
+        coverImageUrl: '/media/escuridao%20absoluta/booster-bundle-br.avif',
+      },
+    ]
     const featuredProductSlugs = new Set([
       'celebracao-30-anos-treinador-avancado',
       'celebracao-30-anos-box-com-poster',
@@ -195,7 +239,7 @@ export default class extends BaseSeeder {
     await Product.query()
       .whereNotIn(
         'slug',
-        celebrationProducts.map((product) => product.slug)
+        [...celebrationProducts, ...escuridaoAbsolutaProducts].map((product) => product.slug)
       )
       .delete()
     await Collection.query()
@@ -218,6 +262,22 @@ export default class extends BaseSeeder {
       )
 
       await product.related('collections').sync([celebracao30Anos.id])
+    }
+
+    for (const escuridaoAbsolutaProduct of escuridaoAbsolutaProducts) {
+      const product = await Product.updateOrCreate(
+        { slug: escuridaoAbsolutaProduct.slug },
+        {
+          ...escuridaoAbsolutaProduct,
+          stock: 10,
+          availability: 'in_stock',
+          status: 'published',
+          isFeatured: false,
+          publishedAt: now,
+        }
+      )
+
+      await product.related('collections').sync([escuridaoAbsoluta.id])
     }
 
     await PromotionalBanner.updateOrCreate(
