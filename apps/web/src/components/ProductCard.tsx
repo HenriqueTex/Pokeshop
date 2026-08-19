@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { CSSProperties } from "react";
+import { motion } from "framer-motion";
 import { formatPrice, mediaUrl, type Product } from "../lib/api";
 import { useCartStore } from "../lib/cart";
 
@@ -24,13 +25,30 @@ export function ProductCard({ product }: { product: Product }) {
     : undefined;
 
   return (
-    <article className="product-card">
-      <Link
-        className="product-card__image"
-        to={`/produtos/${product.slug}`}
-        aria-label={`Ver ${product.name}`}
-        style={imageStyle}
-      />
+    <motion.article
+      className="product-card"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.015 }}
+      transition={{ duration: 0.25 }}
+    >
+      <div className="product-card__visual">
+        <Link
+          className="product-card__image"
+          to={`/produtos/${product.slug}`}
+          aria-label={`Ver ${product.name}`}
+          style={imageStyle}
+        />
+        <motion.button
+          className="product-card__add"
+          type="button"
+          disabled={soldOut}
+          onClick={() => add(product)}
+          whileTap={{ scale: 0.96 }}
+        >
+          {soldOut ? "Esgotado" : "Adicionar ao carrinho"}
+        </motion.button>
+      </div>
       <div className="product-card__content">
         <p className="product-card__collection">
           {product.collections[0]?.name ?? "Triade Arte"}
@@ -40,11 +58,11 @@ export function ProductCard({ product }: { product: Product }) {
         </h3>
         <div className="product-card__bottom">
           <strong>{formatPrice(product.priceCents)}</strong>
-          <button type="button" disabled={soldOut} onClick={() => add(product)}>
-            {soldOut ? "Esgotado" : "Adicionar"}
-          </button>
+          <span>
+            {soldOut ? "Indisponível" : `${product.stock} em estoque`}
+          </span>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
