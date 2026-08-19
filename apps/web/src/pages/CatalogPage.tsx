@@ -19,7 +19,7 @@ export function CatalogPage() {
   }
 
   return (
-    <main className="shop-page">
+    <main className="shop-page catalog-page">
       <ShopHeader />
       <section className="catalog-intro"><p className="eyebrow">Explore a coleção</p><h1>Encontre sua próxima raridade.</h1><p>Filtre por tipo de produto, coleção e disponibilidade.</p></section>
       <section className="catalog-layout" aria-label="Catálogo de produtos">
