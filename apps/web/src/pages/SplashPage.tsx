@@ -6,9 +6,11 @@ export function SplashPage() {
   const navigate = useNavigate()
   const videoRef = useRef<HTMLVideoElement>(null)
   const fallbackTimerRef = useRef<number | undefined>(undefined)
+  const exitTimerRef = useRef<number | undefined>(undefined)
   const [isFinished, setIsFinished] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false)
+  const [isLeaving, setIsLeaving] = useState(false)
 
   const finishIntro = () => {
     window.clearTimeout(fallbackTimerRef.current)
@@ -36,7 +38,10 @@ export function SplashPage() {
     video.setAttribute('webkit-playsinline', '')
     void startVideo()
 
-    return () => window.clearTimeout(fallbackTimerRef.current)
+    return () => {
+      window.clearTimeout(fallbackTimerRef.current)
+      window.clearTimeout(exitTimerRef.current)
+    }
   }, [startVideo])
 
   const handleLoadedMetadata = () => {
@@ -62,8 +67,16 @@ export function SplashPage() {
     finishIntro()
   }
 
+  const continueToStore = () => {
+    if (isLeaving) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setIsLeaving(true)
+    exitTimerRef.current = window.setTimeout(() => navigate('/home'), reducedMotion ? 0 : 560)
+  }
+
   return (
-    <main className={`splash ${isFinished ? 'splash--finished' : ''}`}>
+    <main className={`splash ${isFinished ? 'splash--finished' : ''} ${isLeaving ? 'splash--leaving' : ''}`} aria-busy={isLeaving}>
       <img className="splash__final-frame" src="/media/splash-final.jpeg" alt="" />
       <video ref={videoRef} className="splash__video" autoPlay muted playsInline preload="auto" poster="/media/splash-final.jpeg" aria-hidden="true" onCanPlay={() => void startVideo()} onLoadedMetadata={handleLoadedMetadata} onEnded={finishIntro}>
         <source src="/media/splash.mp4" type="video/mp4" />
@@ -74,7 +87,7 @@ export function SplashPage() {
 
       <section className="splash__brand" aria-labelledby="splash-title">
         <h1 id="splash-title">Triade Arte<span>Pokémon Store</span></h1>
-        <button className={`splash__cta ${isFinished ? 'splash__cta--visible' : ''}`} type="button" onClick={() => navigate('/home')}>
+        <button className={`splash__cta ${isFinished ? 'splash__cta--visible' : ''}`} type="button" onClick={continueToStore} disabled={isLeaving}>
           Sua aventura começa aqui <span aria-hidden="true">→</span>
         </button>
       </section>
