@@ -93,6 +93,7 @@ export function ProductPage() {
               className="product-detail__action"
               disabled={soldOut}
               onAdd={() => add(product)}
+              successMessage={`${product.name} foi adicionado ao carrinho.`}
               label={
                 soldOut
                   ? "Item esgotado"

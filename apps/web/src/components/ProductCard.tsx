@@ -45,6 +45,7 @@ export function ProductCard({ product }: { product: Product }) {
           className="product-card__add"
           disabled={soldOut}
           onAdd={() => add(product)}
+          successMessage={`${product.name} foi adicionado ao carrinho.`}
           label={
             soldOut
               ? "Esgotado"
