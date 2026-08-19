@@ -202,6 +202,9 @@
   padding: 1.5rem;
   border: 1px solid rgb(255 255 255 / 14%);
   background: linear-gradient(145deg, rgb(255 255 255 / 5%), transparent);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #fff;
   text-decoration: none;
 }
@@ -388,6 +391,25 @@
   max-width: 50rem;
   padding: 6rem 0 4rem;
 }
+.collection-hero--with-image {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: end;
+  width: 100vw;
+  min-height: min(60svh, 42rem);
+  max-width: none;
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 5.5rem);
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.collection-hero--with-image > * {
+  position: relative;
+  z-index: 1;
+}
 .collection-hero h1 {
   margin: 0;
   font-size: clamp(3rem, 7vw, 7rem);
@@ -506,6 +528,11 @@
   }
   .home-banner {
     min-height: 62svh;
+  }
+  .collection-hero--with-image {
+    min-height: 34rem;
+    padding: 3rem 1.5rem;
+    background-position: 62% center;
   }
   .product-grid,
   .collection-grid {

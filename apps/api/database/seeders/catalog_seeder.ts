@@ -13,10 +13,8 @@ export default class extends BaseSeeder {
       {
         name: 'Celebração de 30 Anos',
         description: 'Três décadas de Pokémon celebradas em produtos especiais e cartas marcantes.',
-        imageUrl:
-          'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png',
-        bannerUrl:
-          'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png',
+        imageUrl: '/media/celebra%C3%A7%C3%A3o-30-anos.jpg',
+        bannerUrl: '/media/celebra%C3%A7%C3%A3o-30-anos.jpg',
         sortOrder: 1,
         isPublished: true,
       }
