@@ -927,6 +927,10 @@
   overflow: hidden;
 }
 
+.product-card__add.capture-cart-button {
+  position: absolute;
+}
+
 .capture-cart-button--capturing,
 .capture-cart-button--success {
   pointer-events: none;
@@ -1007,7 +1011,7 @@
   transition-delay: 180ms;
 }
 
-.capture-cart-button--capturing .capture-cart-button__pokeball {
+.capture-cart-button--capturing {
   animation:
     capture-shake 420ms ease-in-out 480ms,
     capture-shake 420ms ease-in-out 1s;
