@@ -16,19 +16,17 @@ export function ProductPage() {
   const imageUrl = product?.coverImageUrl
     ? mediaUrl(product.coverImageUrl)
     : undefined;
-  const isProductPackshot = [
-    "celebracao-30-anos-treinador-avancado",
-    "celebracao-30-anos-box-colecao-com-fichario",
-  ].includes(product?.slug ?? "");
+  const isLocalProductImage =
+    product?.coverImageUrl?.startsWith("/media/") ?? false;
   const imageStyle: CSSProperties | undefined = imageUrl
     ? {
-        backgroundImage: isProductPackshot
+        backgroundImage: isLocalProductImage
           ? `url(${imageUrl})`
           : `linear-gradient(rgb(0 0 0 / 12%), rgb(0 0 0 / 38%)), url(${imageUrl})`,
-        backgroundColor: isProductPackshot ? "#f7f5ef" : undefined,
-        backgroundPosition: isProductPackshot ? "center" : undefined,
-        backgroundRepeat: isProductPackshot ? "no-repeat" : undefined,
-        backgroundSize: isProductPackshot ? "contain" : undefined,
+        backgroundColor: isLocalProductImage ? "#f7f5ef" : undefined,
+        backgroundPosition: isLocalProductImage ? "center" : undefined,
+        backgroundRepeat: isLocalProductImage ? "no-repeat" : undefined,
+        backgroundSize: isLocalProductImage ? "contain" : undefined,
       }
     : undefined;
 

@@ -25,8 +25,25 @@ export default class extends BaseSeeder {
     const now = DateTime.now()
     const celebrationImage =
       'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png'
-    const celebrationEtbImage = '/media/elite-trainer-box-br.avif'
-    const celebrationBinderImage = '/media/Bindedr.avif'
+    const celebrationProductImages: Record<string, string> = {
+      'celebracao-30-anos-blister-duplo-com-moeda': '/media/2-pack-blister-br.avif',
+      'celebracao-30-anos-blister-triplo-com-adesivo': '/media/tech-sticker-collection-br.avif',
+      'celebracao-30-anos-treinador-avancado': '/media/elite-trainer-box-br.avif',
+      'celebracao-30-anos-box-com-poster': '/media/poster-collection-br.avif',
+      'celebracao-30-anos-box-colecao-com-fichario': '/media/Bindedr.avif',
+      'celebracao-30-anos-box-ex-sylveon': '/media/pokemon-ex-box-sylveon-ex-greninja-ex-br.avif',
+      'celebracao-30-anos-box-ex-greninja': '/media/pokemon-ex-box-sylveon-ex-greninja-ex-br.avif',
+      'celebracao-30-anos-combo-de-booster': '/media/booster-bundle-br.avif',
+      'celebracao-30-anos-baralho-de-batalha-espeon-ex':
+        '/media/battle-deck-espeon-ex-umbreon-ex-br.avif',
+      'celebracao-30-anos-baralho-de-batalha-umbreon-ex':
+        '/media/battle-deck-espeon-ex-umbreon-ex-br.avif',
+      'celebracao-30-anos-minilata': '/media/mini-tin.avif',
+      'celebracao-30-anos-box-colecao-com-miniatura-mewtwo':
+        '/media/figure-collection-mew-mewtwo-br.avif',
+      'celebracao-30-anos-box-colecao-com-miniatura-mew':
+        '/media/figure-collection-mew-mewtwo-br.avif',
+    }
     const celebrationProducts = [
       {
         slug: 'celebracao-30-anos-blister-duplo-com-moeda',
@@ -171,12 +188,7 @@ export default class extends BaseSeeder {
         { slug: celebrationProduct.slug },
         {
           ...celebrationProduct,
-          coverImageUrl:
-            celebrationProduct.slug === 'celebracao-30-anos-treinador-avancado'
-              ? celebrationEtbImage
-              : celebrationProduct.slug === 'celebracao-30-anos-box-colecao-com-fichario'
-                ? celebrationBinderImage
-                : celebrationImage,
+          coverImageUrl: celebrationProductImages[celebrationProduct.slug] ?? celebrationImage,
           stock: 10,
           status: 'published',
           isFeatured: celebrationProduct.slug === 'celebracao-30-anos-treinador-avancado',
