@@ -40,7 +40,11 @@ export function CollectionsPage() {
                   className="collection-card"
                   to={`/colecoes/${collection.slug}`}
                   style={
-                    imageUrl ? { backgroundImage: `url(${imageUrl})` } : undefined
+                    imageUrl
+                      ? {
+                          backgroundImage: `linear-gradient(rgb(0 0 0 / 72%), rgb(0 0 0 / 72%)), url(${imageUrl})`,
+                        }
+                      : undefined
                   }
                 >
                   <span>{String(index + 1).padStart(2, "0")}</span>
