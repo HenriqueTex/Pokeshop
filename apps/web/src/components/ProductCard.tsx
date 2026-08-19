@@ -50,18 +50,18 @@ export function ProductCard({ product }: { product: Product }) {
         </motion.button>
       </div>
       <div className="product-card__content">
+        <div className="product-card__bottom">
+          <strong>{formatPrice(product.priceCents)}</strong>
+        </div>
         <p className="product-card__collection">
           {product.collections[0]?.name ?? "Triade Arte"}
         </p>
         <h3>
           <Link to={`/produtos/${product.slug}`}>{product.name}</Link>
         </h3>
-        <div className="product-card__bottom">
-          <strong>{formatPrice(product.priceCents)}</strong>
-          <span>
-            {soldOut ? "Indisponível" : `${product.stock} em estoque`}
-          </span>
-        </div>
+        <p className="product-card__availability">
+          {soldOut ? "Indisponível" : `${product.stock} em estoque`}
+        </p>
       </div>
     </motion.article>
   );
