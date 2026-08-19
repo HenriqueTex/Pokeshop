@@ -3,6 +3,8 @@ import { DateTime } from 'luxon'
 import Collection from '#models/collection'
 import Product from '#models/product'
 import PromotionalBanner from '#models/promotional_banner'
+import Admin from '#models/admin'
+import env from '#start/env'
 
 export default class extends BaseSeeder {
   async run() {
@@ -93,5 +95,20 @@ export default class extends BaseSeeder {
         sortOrder: 1,
       }
     )
+
+    const adminEmail = env.get('ADMIN_EMAIL')
+    const adminPassword = env.get('ADMIN_PASSWORD')
+    if (adminEmail && adminPassword) {
+      const admin = await Admin.findBy('email', adminEmail)
+      if (!admin) {
+        await Admin.create({
+          name: 'Administrador Triade Arte',
+          email: adminEmail,
+          password: adminPassword,
+          role: 'admin',
+          isActive: true,
+        })
+      }
+    }
   }
 }
