@@ -8,33 +8,6 @@ import env from '#start/env'
 
 export default class extends BaseSeeder {
   async run() {
-    const paldea = await Collection.updateOrCreate(
-      { slug: 'destinos-de-paldea' },
-      {
-        name: 'Destinos de Paldea',
-        description: 'Uma coleção vibrante para abrir, jogar e guardar.',
-        sortOrder: 2,
-        isPublished: true,
-      }
-    )
-    const evolucoes = await Collection.updateOrCreate(
-      { slug: 'evolucoes-em-paldea' },
-      {
-        name: 'Evoluções em Paldea',
-        description: 'Uma jornada pelas evoluções que marcaram uma geração.',
-        sortOrder: 3,
-        isPublished: true,
-      }
-    )
-    const classicos = await Collection.updateOrCreate(
-      { slug: 'classicos-da-triade' },
-      {
-        name: 'Clássicos da Triade',
-        description: 'Peças selecionadas para colecionadores.',
-        sortOrder: 4,
-        isPublished: true,
-      }
-    )
     const celebracao30Anos = await Collection.updateOrCreate(
       { slug: 'celebracao-de-30-anos' },
       {
@@ -50,53 +23,6 @@ export default class extends BaseSeeder {
     )
 
     const now = DateTime.now()
-    const booster = await Product.updateOrCreate(
-      { slug: 'booster-box-destinos-de-paldea' },
-      {
-        name: 'Booster Box Destinos de Paldea',
-        description: 'Uma caixa com boosters para descobrir novas cartas e raridades.',
-        priceCents: 89990,
-        stock: 12,
-        status: 'published',
-        productType: 'booster',
-        releaseDate: DateTime.fromISO('2025-02-01'),
-        isFeatured: true,
-        publishedAt: now,
-      }
-    )
-    const etb = await Product.updateOrCreate(
-      { slug: 'elite-trainer-box-evolucoes-em-paldea' },
-      {
-        name: 'Elite Trainer Box Evoluções em Paldea',
-        description: 'Tudo que você precisa para começar sua próxima batalha.',
-        priceCents: 52990,
-        stock: 8,
-        status: 'published',
-        productType: 'elite-trainer-box',
-        releaseDate: DateTime.fromISO('2025-01-18'),
-        isFeatured: true,
-        publishedAt: now,
-      }
-    )
-    const binder = await Product.updateOrCreate(
-      { slug: 'fichario-premium-triade-arte' },
-      {
-        name: 'Fichário Premium Triade Arte',
-        description: 'Proteção elegante para as cartas que contam sua história.',
-        priceCents: 18990,
-        stock: 20,
-        status: 'published',
-        productType: 'acessorio',
-        releaseDate: DateTime.fromISO('2024-12-05'),
-        isFeatured: false,
-        publishedAt: now,
-      }
-    )
-
-    await booster.related('collections').sync([paldea.id])
-    await etb.related('collections').sync([evolucoes.id])
-    await binder.related('collections').sync([classicos.id])
-
     const celebrationImage =
       'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png'
     const celebrationEtbImage = '/media/elite-trainer-box-br.avif'
@@ -231,6 +157,14 @@ export default class extends BaseSeeder {
         releaseDate: DateTime.fromISO('2026-11-06'),
       },
     ]
+
+    await Product.query()
+      .whereNotIn(
+        'slug',
+        celebrationProducts.map((product) => product.slug)
+      )
+      .delete()
+    await Collection.query().whereNot('slug', 'celebracao-de-30-anos').delete()
 
     for (const celebrationProduct of celebrationProducts) {
       const product = await Product.updateOrCreate(
