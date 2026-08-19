@@ -921,6 +921,135 @@
   opacity: 0.68;
 }
 
+.capture-cart-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.capture-cart-button--capturing,
+.capture-cart-button--success {
+  pointer-events: none;
+}
+
+.capture-cart-button__label {
+  position: relative;
+  z-index: 1;
+}
+
+.capture-cart-button__pokeball {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.capture-cart-button__top,
+.capture-cart-button__base {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 50%;
+  transition: transform 360ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.capture-cart-button__top {
+  top: 0;
+  border-bottom: 3px solid #231d1d;
+  background: #e3350d;
+  transform: translateY(-100%);
+}
+
+.capture-cart-button__base {
+  bottom: 0;
+  border-top: 3px solid #231d1d;
+  background: #f7f5ef;
+  transform: translateY(100%);
+}
+
+.capture-cart-button__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 0.24rem solid #231d1d;
+  border-radius: 50%;
+  background: #f7f5ef;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 240ms ease-out;
+}
+
+.capture-cart-button__center::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 0.12rem solid #231d1d;
+  border-radius: 50%;
+  background: #f7f5ef;
+  content: "";
+  transform: translate(-50%, -50%);
+  transition: background 180ms ease;
+}
+
+.capture-cart-button--capturing .capture-cart-button__top,
+.capture-cart-button--success .capture-cart-button__top,
+.capture-cart-button--capturing .capture-cart-button__base,
+.capture-cart-button--success .capture-cart-button__base {
+  transform: translateY(0);
+}
+
+.capture-cart-button--capturing .capture-cart-button__center,
+.capture-cart-button--success .capture-cart-button__center {
+  transform: translate(-50%, -50%) scale(1);
+  transition-delay: 180ms;
+}
+
+.capture-cart-button--capturing .capture-cart-button__pokeball {
+  animation:
+    capture-shake 420ms ease-in-out 480ms,
+    capture-shake 420ms ease-in-out 1s;
+}
+
+.capture-cart-button--capturing .capture-cart-button__center::after {
+  animation: capture-blink 420ms step-end 480ms 2;
+}
+
+.capture-cart-button--success::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: rgb(76 175 80 / 82%);
+  content: "";
+  pointer-events: none;
+}
+
+.capture-cart-button--success .capture-cart-button__center::after {
+  background: #4caf50;
+}
+
+@keyframes capture-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-0.22rem) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(0.22rem) rotate(2deg);
+  }
+}
+
+@keyframes capture-blink {
+  50% {
+    background: #ff3b3b;
+  }
+}
+
 .product-card__content {
   position: relative;
   z-index: 1;

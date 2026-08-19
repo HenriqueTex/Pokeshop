@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
+import { CaptureCartButton } from "./CaptureCartButton";
 import { formatPrice, mediaUrl, type Product } from "../lib/api";
 import { useCartStore } from "../lib/cart";
 
@@ -40,19 +41,18 @@ export function ProductCard({ product }: { product: Product }) {
           aria-label={`Ver ${product.name}`}
           style={imageStyle}
         />
-        <motion.button
+        <CaptureCartButton
           className="product-card__add"
-          type="button"
           disabled={soldOut}
-          onClick={() => add(product)}
-          whileTap={{ scale: 0.96 }}
-        >
-          {soldOut
-            ? "Esgotado"
-            : isPreSale
-              ? "Reservar na pré-venda"
-              : "Adicionar ao carrinho"}
-        </motion.button>
+          onAdd={() => add(product)}
+          label={
+            soldOut
+              ? "Esgotado"
+              : isPreSale
+                ? "Reservar na pré-venda"
+                : "Adicionar ao carrinho"
+          }
+        />
       </div>
       <div className="product-card__content">
         <div className="product-card__bottom">

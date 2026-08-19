@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import type { CSSProperties } from "react";
+import { CaptureCartButton } from "../components/CaptureCartButton";
 import { fetchProduct, formatPrice, mediaUrl } from "../lib/api";
 import { useCartStore } from "../lib/cart";
 import "./shop.css";
@@ -88,18 +89,18 @@ export function ProductPage() {
                 {product.description}
               </p>
             )}
-            <button
+            <CaptureCartButton
               className="product-detail__action"
-              type="button"
               disabled={soldOut}
-              onClick={() => add(product)}
-            >
-              {soldOut
-                ? "Item esgotado"
-                : isPreSale
-                  ? "Reservar na pré-venda →"
-                  : "Adicionar ao carrinho →"}
-            </button>
+              onAdd={() => add(product)}
+              label={
+                soldOut
+                  ? "Item esgotado"
+                  : isPreSale
+                    ? "Reservar na pré-venda →"
+                    : "Adicionar ao carrinho →"
+              }
+            />
             <Link className="product-detail__back" to="/catalogo">
               ← Continuar explorando
             </Link>
