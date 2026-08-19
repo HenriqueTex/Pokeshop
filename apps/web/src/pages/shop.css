@@ -7,8 +7,7 @@
       rgb(182 128 34 / 14%),
       transparent 22rem
     ),
-    var(--page-background),
-    #000;
+    #0a0a0a;
 }
 .shop-header {
   position: fixed;
