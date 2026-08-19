@@ -1,10 +1,26 @@
+.home-page {
+  padding-top: 0;
+}
+
+.home-page .shop-header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 1.25rem clamp(1.5rem, 6vw, 5.5rem);
+  border-bottom-color: rgb(255 255 255 / 10%);
+  background: linear-gradient(180deg, rgb(4 8 4 / 50%), rgb(4 8 4 / 10%));
+  backdrop-filter: blur(6px);
+}
+
 .home-banner {
   position: relative;
   isolation: isolate;
   width: 100vw;
-  min-height: 67svh;
+  min-height: max(67svh, 42rem);
   max-width: none;
-  padding: clamp(2rem, 7vw, 6rem);
+  padding: clamp(7rem, 13vw, 10rem) clamp(2rem, 7vw, 6rem) clamp(2rem, 7vw, 6rem);
   margin-left: calc(50% - 50vw);
   background:
     linear-gradient(90deg, rgb(4 8 4 / 86%) 0%, rgb(4 8 4 / 57%) 44%, rgb(4 8 4 / 12%) 76%),
@@ -39,9 +55,13 @@
 }
 
 @media (max-width: 820px) {
+  .home-page .shop-header {
+    padding: 1.125rem 1.5rem;
+  }
+
   .home-banner {
-    min-height: 62svh;
-    padding: 2rem 1.5rem;
+    min-height: 72svh;
+    padding: 7rem 1.5rem 2rem;
     background-position: 58% center;
   }
 }
