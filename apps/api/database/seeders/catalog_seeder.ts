@@ -99,8 +99,8 @@ export default class extends BaseSeeder {
 
     const celebrationImage =
       'https://mcdn.pokemon.com/image/upload/c_limit,w_1439/f_auto/q_auto:best/v1/live/pcom-cms/static-assets/cms3/br/img/trading-card-game/tiles/30th/product-showcase/30th-product-showcase-169-br.png'
-    const celebrationEtbImage =
-      'https://feenturm.de/cdn/shop/files/Pokemon_TCG_30th_Celebration_ETB_converted.webp?v=1783074720'
+    const celebrationEtbImage = '/media/elite-trainer-box-br.avif'
+    const celebrationBinderImage = '/media/Bindedr.avif'
     const celebrationProducts = [
       {
         slug: 'celebracao-30-anos-blister-duplo-com-moeda',
@@ -240,7 +240,9 @@ export default class extends BaseSeeder {
           coverImageUrl:
             celebrationProduct.slug === 'celebracao-30-anos-treinador-avancado'
               ? celebrationEtbImage
-              : celebrationImage,
+              : celebrationProduct.slug === 'celebracao-30-anos-box-colecao-com-fichario'
+                ? celebrationBinderImage
+                : celebrationImage,
           stock: 10,
           status: 'published',
           isFeatured: celebrationProduct.slug === 'celebracao-30-anos-treinador-avancado',
