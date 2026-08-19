@@ -1,0 +1,26 @@
+.home-banner {
+  min-height: 67svh;
+  max-width: none;
+  padding: clamp(2rem, 7vw, 6rem);
+  background:
+    linear-gradient(90deg, rgb(4 8 4 / 86%) 0%, rgb(4 8 4 / 57%) 44%, rgb(4 8 4 / 12%) 76%),
+    linear-gradient(0deg, rgb(4 8 4 / 38%), transparent 48%),
+    url('/media/hero.jpeg') center / cover no-repeat;
+}
+
+.home-banner > div {
+  position: relative;
+  max-width: 48rem;
+}
+
+.home-banner > div > p:not(.eyebrow) {
+  color: rgb(255 255 255 / 78%);
+}
+
+@media (max-width: 820px) {
+  .home-banner {
+    min-height: 62svh;
+    padding: 2rem 1.5rem;
+    background-position: 58% center;
+  }
+}

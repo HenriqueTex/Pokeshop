@@ -4,6 +4,7 @@ import { ProductCard } from '../components/ProductCard'
 import { ShopHeader } from '../components/ShopHeader'
 import { fetchHome } from '../lib/api'
 import './shop.css'
+import './home-hero.css'
 
 export function HomePage() {
   const homeQuery = useQuery({ queryKey: ['home'], queryFn: fetchHome })
