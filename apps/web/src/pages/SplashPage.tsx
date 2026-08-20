@@ -16,11 +16,34 @@ export function SplashPage() {
     window.matchMedia("(max-width: 900px)").matches,
   );
 
+  const continueToStore = useCallback(() => {
+    if (isLeaving) return;
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    setIsLeaving(true);
+    exitTimerRef.current = window.setTimeout(
+      () => navigate("/home"),
+      reducedMotion ? 0 : 560,
+    );
+  }, [isLeaving, navigate]);
+
   const finishIntro = useCallback(() => {
     window.clearTimeout(fallbackTimerRef.current);
     setHasPlaybackStarted(false);
     setIsFinished(true);
   }, []);
+
+  const completeIntro = useCallback(() => {
+    window.clearTimeout(fallbackTimerRef.current);
+    if (isMobileViewport) {
+      continueToStore();
+      return;
+    }
+
+    finishIntro();
+  }, [continueToStore, finishIntro, isMobileViewport]);
 
   const startVideo = useCallback(async (allowMobileStart = false) => {
     const video = videoRef.current;
@@ -77,7 +100,7 @@ export function SplashPage() {
       document.removeEventListener("pointerdown", unlockPlayback, true);
       document.removeEventListener("touchstart", unlockPlayback, true);
       document.removeEventListener("keydown", unlockPlayback, true);
-      void startVideo();
+      void startVideo(isMobileViewport);
     };
 
     document.addEventListener("pointerdown", unlockPlayback, true);
@@ -92,7 +115,7 @@ export function SplashPage() {
       document.removeEventListener("touchstart", unlockPlayback, true);
       document.removeEventListener("keydown", unlockPlayback, true);
     };
-  }, [isAutoplayBlocked, isFinished, startVideo]);
+  }, [isAutoplayBlocked, isFinished, isMobileViewport, startVideo]);
 
   const handlePlaying = () => {
     const video = videoRef.current;
@@ -105,7 +128,7 @@ export function SplashPage() {
 
     window.clearTimeout(fallbackTimerRef.current);
     fallbackTimerRef.current = window.setTimeout(
-      finishIntro,
+      completeIntro,
       remainingDuration * 1000 + 400,
     );
   };
@@ -120,22 +143,29 @@ export function SplashPage() {
     if (!video.muted) await startVideo(true);
   };
 
-  const skipIntro = () => {
-    videoRef.current?.pause();
-    finishIntro();
+  const startMobileIntro = async () => {
+    const video = videoRef.current;
+    if (!video || hasPlaybackStarted || isLeaving) return;
+
+    video.currentTime = 0;
+    video.muted = false;
+    setIsMuted(false);
+    await startVideo(true);
   };
 
-  const continueToStore = () => {
-    if (isLeaving) return;
+  const skipIntro = () => {
+    videoRef.current?.pause();
+    if (isMobileViewport) continueToStore();
+    else finishIntro();
+  };
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    setIsLeaving(true);
-    exitTimerRef.current = window.setTimeout(
-      () => navigate("/home"),
-      reducedMotion ? 0 : 560,
-    );
+  const handlePrimaryAction = () => {
+    if (isMobileViewport && !hasPlaybackStarted && !isFinished) {
+      void startMobileIntro();
+      return;
+    }
+
+    continueToStore();
   };
 
   return (
@@ -163,7 +193,7 @@ export function SplashPage() {
         onLoadedData={() => void startVideo()}
         onLoadedMetadata={() => void startVideo()}
         onPlaying={handlePlaying}
-        onEnded={finishIntro}
+        onEnded={completeIntro}
       >
         <source src="/media/splash.mp4" type="video/mp4" />
       </video>
@@ -180,34 +210,67 @@ export function SplashPage() {
       <button
         className={`splash__cta ${isFinished ? "splash__cta--visible" : ""} ${!hasPlaybackStarted ? "splash__cta--mobile-visible" : ""}`}
         type="button"
-        onClick={continueToStore}
+        onClick={handlePrimaryAction}
         disabled={isLeaving}
       >
         Sua aventura começa aqui <span aria-hidden="true">→</span>
       </button>
 
-      {!isFinished && (
+      {!isFinished && (!isMobileViewport || hasPlaybackStarted) && (
         <div className="splash__controls">
           <button
             className="splash__sound"
             type="button"
             aria-pressed={!isMuted}
-            aria-label={
-              isMuted ? "Ativar som e iniciar vídeo" : "Desativar som"
-            }
+            aria-label={isMuted ? "Ativar som" : "Desativar som"}
             onClick={() => void toggleSound()}
           >
-            <img
-              className="splash__sound-icon"
-              src="/media/Icon-pikachu.png"
-              alt=""
-            />
             <span className="splash__sound-label">
               {isMuted ? "Ativar som" : "Desativar som"}
             </span>
+            {isMuted ? (
+              <svg
+                className="splash__control-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path d="M11 5 6.5 9H3v6h3.5l4.5 4V5Z" />
+                <path d="m16 9 5 6m0-6-5 6" />
+              </svg>
+            ) : (
+              <svg
+                className="splash__control-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path d="M11 5 6.5 9H3v6h3.5l4.5 4V5Z" />
+                <path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" />
+              </svg>
+            )}
           </button>
-          <button className="splash__skip" type="button" onClick={skipIntro}>
-            Pular animação →
+          <button
+            className="splash__skip"
+            type="button"
+            aria-label="Avançar para a loja"
+            onClick={skipIntro}
+          >
+            <span className="splash__skip-label">Pular animação →</span>
+            <svg
+              className="splash__control-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              aria-hidden="true"
+            >
+              <path d="m5 5 8 7-8 7V5Zm9 0 7 7-7 7V5Z" />
+            </svg>
           </button>
         </div>
       )}
