@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PokeShop — Apresentação Comercial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #070807;
+        --surface: #121311;
+        --surface-2: #1a1b18;
+        --paper: #f5f2e9;
+        --white: #ffffff;
+        --muted: #aaa9a3;
+        --gold: #e3b33e;
+        --gold-soft: #f3ce6e;
+        --line: rgba(255, 255, 255, 0.13);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        background: #282828;
+        color: var(--white);
+        font-family: "Roboto", Arial, sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body {
+        display: grid;
+        gap: 24px;
+        justify-content: center;
+      }
+
+      @page {
+        size: 13.333in 7.5in;
+        margin: 0;
+      }
+
+      .page {
+        position: relative;
+        width: 13.333in;
+        height: 7.5in;
+        overflow: hidden;
+        break-after: page;
+        background: var(--ink);
+      }
+
+      .page:last-child {
+        break-after: auto;
+      }
+
+      .pad {
+        height: 100%;
+        padding: 0.58in 0.72in 0.5in;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-mark {
+        position: relative;
+        width: 25px;
+        height: 25px;
+        border: 2px solid var(--white);
+        border-radius: 50%;
+      }
+
+      .brand-mark::before {
+        position: absolute;
+        top: 10px;
+        left: -2px;
+        width: 25px;
+        border-top: 2px solid var(--white);
+        content: "";
+      }
+
+      .brand-mark::after {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 9px;
+        height: 9px;
+        border: 2px solid var(--white);
+        border-radius: 50%;
+        background: var(--ink);
+        content: "";
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: 300;
+        letter-spacing: -0.055em;
+      }
+
+      h1 {
+        margin-bottom: 18px;
+        font-size: 68px;
+        line-height: 0.94;
+      }
+
+      h2 {
+        margin-bottom: 16px;
+        font-size: 43px;
+        line-height: 1;
+      }
+
+      h3 {
+        margin-bottom: 7px;
+        font-size: 22px;
+        line-height: 1.08;
+      }
+
+      p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .lead {
+        max-width: 620px;
+        color: rgba(255, 255, 255, 0.77);
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .gold {
+        color: var(--gold);
+      }
+
+      .folio {
+        position: absolute;
+        right: 0.72in;
+        bottom: 0.28in;
+        z-index: 10;
+        color: rgba(255, 255, 255, 0.42);
+        font-size: 9px;
+        letter-spacing: 0.16em;
+      }
+
+      .folio.left {
+        right: auto;
+        left: 0.72in;
+      }
+
+      .rule {
+        width: 46px;
+        height: 2px;
+        margin: 22px 0;
+        background: var(--gold);
+      }
+
+      .frame {
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 15px;
+        background: #111;
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.44);
+      }
+
+      .frame img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .browser-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 26px;
+        padding: 0 12px;
+        background: #22231f;
+      }
+
+      .browser-bar span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #5a5a54;
+      }
+
+      .browser-bar span:first-child {
+        background: var(--gold);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 10px;
+        border: 1px solid rgba(227, 179, 62, 0.42);
+        border-radius: 999px;
+        background: rgba(7, 8, 7, 0.58);
+        color: var(--gold-soft);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .tag::before {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold);
+        content: "";
+      }
+
+      .cover {
+        background-image:
+          linear-gradient(90deg, rgba(2, 4, 3, 0.93) 0%, rgba(2, 4, 3, 0.5) 47%, rgba(2, 4, 3, 0.16) 100%),
+          linear-gradient(0deg, rgba(2, 4, 3, 0.78) 0%, transparent 48%),
+          url("assets/presentation/01-splash.webp");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .cover .brand {
+        position: absolute;
+        top: 0.56in;
+        left: 0.72in;
+      }
+
+      .cover-copy {
+        position: absolute;
+        top: 1.72in;
+        left: 0.72in;
+        width: 6.1in;
+      }
+
+      .cover h1 {
+        max-width: 630px;
+        margin: 18px 0 24px;
+        font-size: 72px;
+      }
+
+      .cover .lead {
+        max-width: 500px;
+      }
+
+      .cover-meta {
+        position: absolute;
+        right: 0.72in;
+        bottom: 0.48in;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.54);
+        font-size: 10px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .cover-meta::before {
+        width: 60px;
+        border-top: 1px solid rgba(255, 255, 255, 0.42);
+        content: "";
+      }
+
+      .hero-canvas {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hero-canvas img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .value-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(5, 6, 5, 0.96) 0%, rgba(5, 6, 5, 0.8) 38%, rgba(5, 6, 5, 0.1) 76%);
+      }
+
+      .value-copy {
+        position: absolute;
+        top: 0.72in;
+        left: 0.72in;
+        width: 5.4in;
+      }
+
+      .value-copy h2 {
+        margin-top: 48px;
+        font-size: 58px;
+      }
+
+      .signal-row {
+        position: absolute;
+        right: 0.72in;
+        bottom: 0.6in;
+        left: 0.72in;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .signal {
+        min-height: 86px;
+        padding: 15px 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(8, 9, 8, 0.74);
+        backdrop-filter: blur(10px);
+      }
+
+      .signal b {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .signal span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 0.86fr 1.35fr;
+        gap: 0.42in;
+        height: calc(100% - 30px);
+        align-items: center;
+      }
+
+      .opening-frame {
+        height: 5.55in;
+      }
+
+      .opening-frame img {
+        object-position: 55% center;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 28px;
+      }
+
+      .feature {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 12px;
+        padding-top: 13px;
+        border-top: 1px solid var(--line);
+      }
+
+      .feature-num {
+        color: var(--gold);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+
+      .feature strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .feature p {
+        margin: 0;
+        font-size: 11px;
+      }
+
+      .capture-page {
+        background: linear-gradient(135deg, #080908, #11120f 62%, #191608);
+      }
+
+      .capture-layout {
+        display: grid;
+        grid-template-columns: 1.62fr 0.78fr;
+        gap: 0.34in;
+        height: 100%;
+        align-items: center;
+      }
+
+      .capture-shot {
+        height: 5.55in;
+      }
+
+      .capture-shot img {
+        object-position: center;
+      }
+
+      .ultraball-demo {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 60px;
+        margin: 24px 0 20px;
+        border: 2px solid var(--gold);
+        border-radius: 5px;
+        background:
+          linear-gradient(90deg, transparent 0 20%, #f4c82f 20% 30%, transparent 30% 70%, #f4c82f 70% 80%, transparent 80%),
+          linear-gradient(180deg, #313536 0 48%, #171819 48% 51%, #f3f0e6 51% 100%);
+      }
+
+      .ultraball-demo::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        border: 4px solid #171819;
+        border-radius: 50%;
+        background: #f3f0e6;
+        box-shadow: 0 0 0 2px var(--gold);
+        content: "";
+        transform: translate(-50%, -50%);
+      }
+
+      .ultraball-demo::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #171819;
+        border-radius: 50%;
+        background: #4caf50;
+        content: "";
+        transform: translate(-50%, -50%);
+      }
+
+      .three-steps {
+        display: grid;
+        gap: 10px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .step i {
+        display: grid;
+        width: 26px;
+        height: 26px;
+        place-items: center;
+        border: 1px solid rgba(227, 179, 62, 0.5);
+        border-radius: 50%;
+        color: var(--gold);
+        font-size: 9px;
+        font-style: normal;
+      }
+
+      .step span {
+        color: rgba(255, 255, 255, 0.73);
+        font-size: 11px;
+      }
+
+      .catalog-layout {
+        display: grid;
+        grid-template-columns: 1.65fr 0.55fr;
+        gap: 0.34in;
+        height: 5.65in;
+        margin-top: 0.2in;
+      }
+
+      .catalog-shot {
+        height: 100%;
+      }
+
+      .catalog-shot img {
+        object-position: top center;
+      }
+
+      .catalog-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 8px 0;
+      }
+
+      .capability {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .capability b {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--white);
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .capability span {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .collection-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25in;
+        height: 4.9in;
+        margin-top: 0.25in;
+      }
+
+      .collection-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        background: var(--surface);
+      }
+
+      .collection-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .collection-card::after {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(5, 6, 5, 0.88) 0%, transparent 54%);
+        content: "";
+      }
+
+      .collection-label {
+        position: absolute;
+        right: 24px;
+        bottom: 22px;
+        left: 24px;
+        z-index: 2;
+      }
+
+      .collection-label b {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      .collection-label span {
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .availability-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 0.35in;
+      }
+
+      .availability-card {
+        overflow: hidden;
+        border-radius: 16px;
+        background: var(--surface-2);
+      }
+
+      .availability-image {
+        display: grid;
+        height: 2.45in;
+        place-items: center;
+        background: #f4f1e9;
+      }
+
+      .availability-image img {
+        width: 86%;
+        height: 86%;
+        object-fit: contain;
+      }
+
+      .availability-copy {
+        padding: 17px 19px 18px;
+      }
+
+      .status {
+        display: inline-flex;
+        margin-bottom: 11px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        color: #0b0b08;
+        background: var(--gold);
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .status.sold {
+        color: var(--white);
+        background: #53544f;
+      }
+
+      .status.pre {
+        color: #1d1400;
+        background: var(--gold-soft);
+      }
+
+      .availability-copy h3 {
+        min-height: 47px;
+        font-size: 19px;
+        font-weight: 400;
+      }
+
+      .availability-copy p {
+        min-height: 34px;
+        margin: 0;
+        font-size: 10px;
+      }
+
+      .cart-layout-slide {
+        display: grid;
+        grid-template-columns: 1.55fr 0.6fr;
+        gap: 0.35in;
+        height: 5.42in;
+        margin-top: 0.25in;
+      }
+
+      .cart-shot {
+        height: 100%;
+      }
+
+      .cart-shot img {
+        object-position: top center;
+      }
+
+      .cart-points {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .scope-note {
+        margin-top: 24px;
+        padding: 14px 15px;
+        border-left: 3px solid var(--gold);
+        background: rgba(227, 179, 62, 0.08);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 10px;
+        line-height: 1.5;
+      }
+
+      .mobile-page {
+        background:
+          radial-gradient(circle at 78% 18%, rgba(227, 179, 62, 0.13), transparent 28%),
+          linear-gradient(135deg, #090a09, #12130f);
+      }
+
+      .mobile-layout {
+        display: grid;
+        grid-template-columns: 0.74fr 1.26fr;
+        gap: 0.42in;
+        height: 100%;
+        align-items: center;
+      }
+
+      .phones {
+        position: relative;
+        height: 5.9in;
+      }
+
+      .phone {
+        position: absolute;
+        top: 0;
+        overflow: hidden;
+        width: 2.14in;
+        height: 4.64in;
+        border: 5px solid #252623;
+        border-radius: 25px;
+        background: #000;
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
+      }
+
+      .phone::before {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        z-index: 3;
+        width: 48px;
+        height: 8px;
+        border-radius: 8px;
+        background: #191a18;
+        content: "";
+        transform: translateX(-50%);
+      }
+
+      .phone img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .phone.one {
+        top: 0.7in;
+        left: 0.05in;
+        transform: rotate(-5deg);
+      }
+
+      .phone.two {
+        z-index: 2;
+        top: 0.15in;
+        left: 1.85in;
+        width: 2.32in;
+        height: 5.05in;
+      }
+
+      .phone.three {
+        top: 0.7in;
+        left: 3.95in;
+        transform: rotate(5deg);
+      }
+
+      .mobile-stat {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 26px;
+      }
+
+      .mobile-stat div {
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+
+      .mobile-stat b {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .mobile-stat span {
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .admin-layout {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 0.55in;
+        height: calc(100% - 0.35in);
+        align-items: center;
+      }
+
+      .admin-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .admin-item {
+        min-height: 80px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+      }
+
+      .admin-item b {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--gold);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .admin-item span {
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      .architecture {
+        position: relative;
+        display: grid;
+        gap: 16px;
+        padding: 0.35in;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background:
+          linear-gradient(rgba(227, 179, 62, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(227, 179, 62, 0.035) 1px, transparent 1px),
+          #0d0e0c;
+        background-size: 24px 24px;
+      }
+
+      .arch-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .arch-box {
+        display: grid;
+        min-height: 85px;
+        padding: 12px;
+        place-content: center;
+        border: 1px solid rgba(227, 179, 62, 0.32);
+        border-radius: 10px;
+        background: rgba(18, 19, 17, 0.94);
+        text-align: center;
+      }
+
+      .arch-box b {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--white);
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .arch-box span {
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .arch-arrow {
+        color: var(--gold);
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .value-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-top: 0.28in;
+      }
+
+      .business-card {
+        min-height: 1.62in;
+        padding: 17px;
+        border-top: 2px solid var(--gold);
+        background: var(--surface);
+      }
+
+      .business-card b {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--white);
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .business-card p {
+        margin: 0;
+        font-size: 9px;
+      }
+
+      .roadmap {
+        display: grid;
+        grid-template-columns: 0.85fr repeat(4, 1fr);
+        gap: 1px;
+        margin-top: 0.35in;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--line);
+      }
+
+      .roadmap > div {
+        min-height: 76px;
+        padding: 13px;
+        background: #11120f;
+      }
+
+      .roadmap .current {
+        background: var(--gold);
+        color: #161007;
+      }
+
+      .roadmap small {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--gold);
+        font-size: 7px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .roadmap .current small {
+        color: rgba(22, 16, 7, 0.6);
+      }
+
+      .roadmap b {
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      .closing {
+        background-image:
+          linear-gradient(90deg, rgba(3, 4, 3, 0.94) 0%, rgba(3, 4, 3, 0.65) 51%, rgba(3, 4, 3, 0.28) 100%),
+          linear-gradient(0deg, rgba(3, 4, 3, 0.8) 0%, transparent 52%),
+          url("assets/presentation/01-splash.webp");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .closing-copy {
+        position: absolute;
+        top: 1.25in;
+        left: 0.72in;
+        width: 6.4in;
+      }
+
+      .closing h2 {
+        margin: 24px 0 20px;
+        font-size: 66px;
+      }
+
+      .closing-contact {
+        position: absolute;
+        right: 0.72in;
+        bottom: 0.58in;
+        display: grid;
+        gap: 5px;
+        text-align: right;
+      }
+
+      .closing-contact b {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .closing-contact span {
+        color: rgba(255, 255, 255, 0.56);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+      }
+
+      .legal {
+        position: absolute;
+        bottom: 0.2in;
+        left: 0.72in;
+        max-width: 7.7in;
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 6.5px;
+        line-height: 1.35;
+      }
+
+      @media print {
+        body {
+          display: block;
+        }
+
+        .page {
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page cover">
+      <div class="brand"><span class="brand-mark"></span>PokeShop</div>
+      <div class="cover-copy">
+        <span class="tag">Apresentação comercial · MVP interativo</span>
+        <h1>Uma loja feita para transformar fãs em clientes.</h1>
+        <p class="lead">
+          Catálogo, narrativa e microinterações reunidos em uma experiência digital
+          memorável para o universo Pokémon.
+        </p>
+      </div>
+      <div class="cover-meta">Experiência de e-commerce · 2026</div>
+      <span class="folio left">POKESHOP / APRESENTAÇÃO COMERCIAL</span>
+    </section>
+
+    <section class="page">
+      <div class="hero-canvas"><img src="assets/presentation/02-home.webp" alt="Home da PokeShop" /></div>
+      <div class="value-overlay"></div>
+      <div class="value-copy">
+        <div class="brand"><span class="brand-mark"></span>PokeShop</div>
+        <h2>Não é só uma vitrine.<br />É uma <span class="gold">experiência de marca.</span></h2>
+        <p class="lead">
+          A jornada combina impacto visual, descoberta simples e respostas claras para
+          conduzir o visitante da curiosidade até o carrinho.
+        </p>
+      </div>
+      <div class="signal-row">
+        <div class="signal"><b>Impacto imediato</b><span>Uma abertura cinematográfica estabelece o universo da marca.</span></div>
+        <div class="signal"><b>Descoberta guiada</b><span>Produtos e coleções ficam acessíveis por caminhos objetivos.</span></div>
+        <div class="signal"><b>Ação memorável</b><span>Adicionar ao carrinho se transforma em uma captura temática.</span></div>
+      </div>
+      <span class="folio">02 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <p class="eyebrow">01 · Primeira impressão</p>
+            <h2>A aventura começa antes do catálogo.</h2>
+            <p class="lead">
+              O vídeo do Pikachu em tela cheia funciona como uma assinatura digital:
+              cria atmosfera, aumenta a lembrança da marca e prepara o visitante para explorar.
+            </p>
+            <div class="feature-list">
+              <div class="feature"><span class="feature-num">01</span><div><strong>Entrada por escolha do visitante</strong><p>O CTA inicia vídeo e som de forma compatível com desktop e mobile.</p></div></div>
+              <div class="feature"><span class="feature-num">02</span><div><strong>Controles discretos</strong><p>Som e avanço permanecem disponíveis sem competir com a cena.</p></div></div>
+              <div class="feature"><span class="feature-num">03</span><div><strong>Transição cuidadosa</strong><p>Imagem e áudio desaparecem gradualmente antes da chegada à Home.</p></div></div>
+            </div>
+          </div>
+          <div class="frame opening-frame"><img src="assets/presentation/01-splash.webp" alt="Splash screen da PokeShop" /></div>
+        </div>
+      </div>
+      <span class="folio">03 / 12</span>
+    </section>
+
+    <section class="page capture-page">
+      <div class="pad">
+        <div class="capture-layout">
+          <div class="frame capture-shot">
+            <div class="browser-bar"><span></span><span></span><span></span></div>
+            <img src="assets/presentation/07-captura-sucesso.webp" alt="Animação de captura ao adicionar ao carrinho" />
+          </div>
+          <div>
+            <p class="eyebrow">02 · Momento de assinatura</p>
+            <h2>A compra vira uma captura.</h2>
+            <p>
+              Uma ação comum do e-commerce ganha personalidade: a Ultra Ball ocupa o botão,
+              se movimenta e confirma o sucesso sem interromper a navegação.
+            </p>
+            <div class="ultraball-demo" aria-label="Representação da Ultra Ball"></div>
+            <div class="three-steps">
+              <div class="step"><i>1</i><span>O produto entra no carrinho imediatamente.</span></div>
+              <div class="step"><i>2</i><span>A Ultra Ball transforma o botão por completo.</span></div>
+              <div class="step"><i>3</i><span>Centro verde e notificação confirmam a captura.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="folio">04 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <p class="eyebrow">03 · Descoberta de produtos</p>
+        <h2>Encontrar o produto certo exige poucos passos.</h2>
+        <div class="catalog-layout">
+          <div class="frame catalog-shot"><img src="assets/presentation/03-catalogo.webp" alt="Catálogo com filtros da PokeShop" /></div>
+          <div class="catalog-copy">
+            <div>
+              <div class="capability"><b>Filtro por coleção</b><span>Leva o fã diretamente ao universo que procura.</span></div>
+              <div class="capability"><b>Filtro por produto</b><span>Organiza boosters, boxes, kits e outros formatos.</span></div>
+              <div class="capability"><b>Disponibilidade</b><span>Distingue estoque, pré-venda e itens esgotados.</span></div>
+              <div class="capability"><b>Ordenação</b><span>Relevância, novidade e preço ajudam a decidir.</span></div>
+            </div>
+            <span class="tag">Catálogo responsivo</span>
+          </div>
+        </div>
+      </div>
+      <span class="folio">05 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <p class="eyebrow">04 · Curadoria e narrativa</p>
+        <h2>Coleções contam histórias — e criam novos caminhos de compra.</h2>
+        <div class="collection-layout">
+          <div class="collection-card">
+            <img src="assets/presentation/04-colecoes.webp" alt="Página de coleções" />
+            <div class="collection-label"><b>Explore universos</b><span>Uma página dedicada apresenta cada lançamento com clareza.</span></div>
+          </div>
+          <div class="collection-card">
+            <img src="assets/presentation/05-colecao-30-anos.webp" alt="Página da coleção Celebração de 30 Anos" />
+            <div class="collection-label"><b>Entre na coleção</b><span>Banner, contexto, produtos e acesso a outras coleções no mesmo fluxo.</span></div>
+          </div>
+        </div>
+      </div>
+      <span class="folio">06 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <p class="eyebrow">05 · Estados comerciais</p>
+        <h2>Cada disponibilidade recebe a ação certa.</h2>
+        <p>O visitante entende o cenário do produto sem precisar interpretar mensagens genéricas.</p>
+        <div class="availability-grid">
+          <article class="availability-card">
+            <div class="availability-image"><img src="../apps/web/public/media/elite-trainer-box-br.avif" alt="Elite Trainer Box" /></div>
+            <div class="availability-copy"><span class="status">Em estoque</span><h3>Adicionar ao carrinho</h3><p>Compra direta com estoque visível e feedback de captura.</p></div>
+          </article>
+          <article class="availability-card">
+            <div class="availability-image"><img src="../apps/web/public/media/booster-bundle-br.avif" alt="Combo de boosters" /></div>
+            <div class="availability-copy"><span class="status pre">Pré-venda</span><h3>Reservar agora</h3><p>A linguagem muda para alinhar expectativa e lançamento.</p></div>
+          </article>
+          <article class="availability-card">
+            <div class="availability-image"><img src="../apps/web/public/media/poster-collection-br.avif" alt="Box com pôster" /></div>
+            <div class="availability-copy"><span class="status sold">Esgotado</span><h3>Avise-me quando chegar</h3><p>E-mail ou WhatsApp ficam salvos para evitar preenchimentos repetidos.</p></div>
+          </article>
+        </div>
+      </div>
+      <span class="folio">07 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <p class="eyebrow">06 · Intenção de compra</p>
+        <h2>Do desejo ao carrinho, sem atrito.</h2>
+        <div class="cart-layout-slide">
+          <div class="frame cart-shot"><img src="assets/presentation/08-carrinho.webp" alt="Carrinho da PokeShop" /></div>
+          <div class="cart-points">
+            <div class="feature"><span class="feature-num">01</span><div><strong>Carrinho persistente</strong><p>Os itens permanecem no navegador para o cliente continuar depois.</p></div></div>
+            <div class="feature"><span class="feature-num">02</span><div><strong>Controle completo</strong><p>Quantidade, remoção, subtotal e total reunidos numa única leitura.</p></div></div>
+            <div class="feature"><span class="feature-num">03</span><div><strong>Escopo transparente</strong><p>O MVP encerra a jornada no carrinho, exatamente como planejado.</p></div></div>
+            <div class="scope-note"><b>Próxima fase:</b> checkout, endereço, frete, Pix/cartão e geração de pedidos.</div>
+          </div>
+        </div>
+      </div>
+      <span class="folio">08 / 12</span>
+    </section>
+
+    <section class="page mobile-page">
+      <div class="pad">
+        <div class="mobile-layout">
+          <div>
+            <p class="eyebrow">07 · Mobile first</p>
+            <h2>Desenhado para a tela que o cliente realmente usa.</h2>
+            <p class="lead">
+              Splash, Home e catálogo se reorganizam para telas menores sem perder impacto,
+              legibilidade ou acesso ao carrinho.
+            </p>
+            <div class="mobile-stat">
+              <div><b>Carrinho externo ao menu</b><span>Ação principal sempre visível.</span></div>
+              <div><b>Áreas de toque amplas</b><span>Uso confortável com uma mão.</span></div>
+              <div><b>Filtros em grade</b><span>Menos rolagem para refinar a busca.</span></div>
+              <div><b>Hierarquia preservada</b><span>A mesma marca em qualquer tela.</span></div>
+            </div>
+          </div>
+          <div class="phones">
+            <div class="phone one"><img src="assets/presentation/09-mobile-splash.webp" alt="Splash mobile" /></div>
+            <div class="phone two"><img src="assets/presentation/10-mobile-home.webp" alt="Home mobile" /></div>
+            <div class="phone three"><img src="assets/presentation/11-mobile-catalogo.webp" alt="Catálogo mobile" /></div>
+          </div>
+        </div>
+      </div>
+      <span class="folio">09 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <div class="admin-layout">
+          <div>
+            <p class="eyebrow">08 · Operação e crescimento</p>
+            <h2>Bonito para o cliente. Gerenciável para a loja.</h2>
+            <p>
+              O painel administrativo permite manter o catálogo atualizado sem editar o código da interface.
+            </p>
+            <div class="admin-list">
+              <div class="admin-item"><b>Produtos</b><span>Preço, estoque, imagem, destaque e disponibilidade.</span></div>
+              <div class="admin-item"><b>Coleções</b><span>Conteúdo, ordem, publicação e associação de produtos.</span></div>
+              <div class="admin-item"><b>Banners</b><span>Campanhas promocionais e chamadas da Home.</span></div>
+              <div class="admin-item"><b>Uploads</b><span>Envio de imagens diretamente pelo painel.</span></div>
+            </div>
+          </div>
+          <div class="architecture">
+            <p class="eyebrow">Arquitetura preparada para evoluir</p>
+            <div class="arch-row">
+              <div class="arch-box"><b>React + TypeScript</b><span>Experiência rápida e componentizada</span></div>
+              <div class="arch-box"><b>AdonisJS</b><span>API e regras de negócio organizadas</span></div>
+              <div class="arch-box"><b>PostgreSQL</b><span>Catálogo confiável e extensível</span></div>
+            </div>
+            <div class="arch-arrow">↓ &nbsp;&nbsp;&nbsp; dados sincronizados &nbsp;&nbsp;&nbsp; ↓</div>
+            <div class="arch-row">
+              <div class="arch-box"><b>Loja pública</b><span>Desktop e mobile</span></div>
+              <div class="arch-box"><b>Painel admin</b><span>Gestão centralizada</span></div>
+              <div class="arch-box"><b>Próxima fase</b><span>Checkout e integrações</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="folio">10 / 12</span>
+    </section>
+
+    <section class="page">
+      <div class="pad">
+        <p class="eyebrow">09 · Valor para o negócio</p>
+        <h2>Uma base forte para vender agora e crescer depois.</h2>
+        <div class="value-grid">
+          <div class="business-card"><b>Diferenciação</b><p>Interações temáticas substituem a aparência de um template comum.</p></div>
+          <div class="business-card"><b>Marca memorável</b><p>Splash, captura e identidade visual criam uma assinatura reconhecível.</p></div>
+          <div class="business-card"><b>Menos dúvidas</b><p>Filtros, estoque e feedbacks deixam a jornada mais previsível.</p></div>
+          <div class="business-card"><b>Retenção</b><p>Coleções e avisos de reposição criam motivos para retornar.</p></div>
+          <div class="business-card"><b>Escalabilidade</b><p>Frontend, API e banco separados permitem ampliar sem recomeçar.</p></div>
+        </div>
+        <div class="roadmap">
+          <div class="current"><small>Entregue no MVP</small><b>Descoberta até o carrinho</b></div>
+          <div><small>Próxima oportunidade</small><b>Checkout, frete e pagamentos</b></div>
+          <div><small>Evolução</small><b>Conta, pedidos e favoritos</b></div>
+          <div><small>Campanhas</small><b>Cupons, CRM e reposição</b></div>
+          <div><small>Escala</small><b>Estoque, logística e métricas</b></div>
+        </div>
+        <div class="scope-note"><b>Entrega atual:</b> frontend responsivo, API, banco de dados, painel administrativo, catálogo, coleções, carrinho e interações personalizadas.</div>
+      </div>
+      <span class="folio">11 / 12</span>
+    </section>
+
+    <section class="page closing">
+      <div class="closing-copy">
+        <div class="brand"><span class="brand-mark"></span>PokeShop</div>
+        <h2>Pronta para começar uma nova aventura.</h2>
+        <p class="lead">
+          Uma experiência de e-commerce com identidade própria, jornada clara e estrutura
+          preparada para se transformar em uma operação completa de vendas.
+        </p>
+        <div class="rule"></div>
+        <span class="tag">Vamos apresentar o próximo capítulo?</span>
+      </div>
+      <div class="closing-contact">
+        <b>contato@pokeshop.com.br</b>
+        <span>WHATSAPP · (11) 90000-0000 &nbsp; / &nbsp; @POKESHOP.DEMO</span>
+        <span>CONTATOS DEMONSTRATIVOS — SUBSTITUIR ANTES DO ENVIO COMERCIAL</span>
+      </div>
+      <p class="legal">Pokémon e seus elementos visuais são marcas de seus respectivos titulares. Antes da publicação comercial, devem ser validadas as licenças e permissões de uso dos materiais protegidos apresentados nesta demonstração.</p>
+      <span class="folio">12 / 12</span>
+    </section>
+  </body>
+</html>
