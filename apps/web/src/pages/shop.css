@@ -1,13 +1,7 @@
 .shop-page {
   min-height: 100svh;
   padding: 6rem clamp(1.5rem, 6vw, 5.5rem) 5rem;
-  background:
-    radial-gradient(
-      circle at 84% 12%,
-      rgb(182 128 34 / 14%),
-      transparent 22rem
-    ),
-    #0a0a0a;
+  background: #0a0a0a;
 }
 .shop-header {
   position: fixed;
