@@ -1,5 +1,6 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { ShopHeader } from './components/ShopHeader'
+import { ShopFooter } from './components/ShopFooter'
 import { CartPage } from './pages/CartPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPage } from './pages/AdminPage'
@@ -15,6 +16,7 @@ function StorefrontLayout() {
     <div className="storefront-shell">
       <ShopHeader />
       <Outlet />
+      <ShopFooter />
     </div>
   )
 }
