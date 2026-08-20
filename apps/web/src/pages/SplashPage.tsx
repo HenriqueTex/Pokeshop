@@ -11,15 +11,25 @@ export function SplashPage() {
   const [isMuted, setIsMuted] = useState(true);
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
+  const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false);
+  const [isMobileViewport] = useState(() =>
+    window.matchMedia("(max-width: 900px)").matches,
+  );
 
   const finishIntro = useCallback(() => {
     window.clearTimeout(fallbackTimerRef.current);
+    setHasPlaybackStarted(false);
     setIsFinished(true);
   }, []);
 
-  const startVideo = useCallback(async () => {
+  const startVideo = useCallback(async (allowMobileStart = false) => {
     const video = videoRef.current;
-    if (!video || isFinished) return;
+    if (
+      !video ||
+      isFinished ||
+      (isMobileViewport && !allowMobileStart)
+    )
+      return;
 
     try {
       await video.play();
@@ -27,17 +37,18 @@ export function SplashPage() {
     } catch {
       setIsAutoplayBlocked(true);
     }
-  }, [isFinished]);
+  }, [isFinished, isMobileViewport]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    video.autoplay = true;
+    video.autoplay = !isMobileViewport;
     video.defaultMuted = true;
     video.muted = true;
     video.playsInline = true;
-    video.setAttribute("autoplay", "");
+    if (isMobileViewport) video.removeAttribute("autoplay");
+    else video.setAttribute("autoplay", "");
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
@@ -57,7 +68,7 @@ export function SplashPage() {
       window.clearTimeout(fallbackTimerRef.current);
       window.clearTimeout(exitTimerRef.current);
     };
-  }, [startVideo]);
+  }, [isMobileViewport, startVideo]);
 
   useEffect(() => {
     if (!isAutoplayBlocked || isFinished) return;
@@ -87,6 +98,7 @@ export function SplashPage() {
     const video = videoRef.current;
     if (!video) return;
 
+    setHasPlaybackStarted(true);
     setIsAutoplayBlocked(false);
     const remainingDuration = video.duration - video.currentTime;
     if (!Number.isFinite(remainingDuration) || remainingDuration <= 0) return;
@@ -105,7 +117,7 @@ export function SplashPage() {
     video.muted = !video.muted;
     setIsMuted(video.muted);
 
-    if (!video.muted) await video.play();
+    if (!video.muted) await startVideo(true);
   };
 
   const skipIntro = () => {
@@ -128,7 +140,7 @@ export function SplashPage() {
 
   return (
     <main
-      className={`splash ${isFinished ? "splash--finished" : ""} ${isAutoplayBlocked ? "splash--autoplay-blocked" : ""} ${isLeaving ? "splash--leaving" : ""}`}
+      className={`splash ${isFinished ? "splash--finished" : ""} ${isAutoplayBlocked ? "splash--autoplay-blocked" : ""} ${isMobileViewport && !hasPlaybackStarted && !isFinished ? "splash--awaiting-start" : ""} ${isLeaving ? "splash--leaving" : ""}`}
       aria-busy={isLeaving}
     >
       <img
@@ -139,7 +151,7 @@ export function SplashPage() {
       <video
         ref={videoRef}
         className="splash__video"
-        autoPlay
+        autoPlay={!isMobileViewport}
         muted
         playsInline
         disablePictureInPicture
@@ -166,7 +178,7 @@ export function SplashPage() {
       </section>
 
       <button
-        className={`splash__cta ${isFinished ? "splash__cta--visible" : ""}`}
+        className={`splash__cta ${isFinished ? "splash__cta--visible" : ""} ${!hasPlaybackStarted ? "splash__cta--mobile-visible" : ""}`}
         type="button"
         onClick={continueToStore}
         disabled={isLeaving}
@@ -180,9 +192,19 @@ export function SplashPage() {
             className="splash__sound"
             type="button"
             aria-pressed={!isMuted}
+            aria-label={
+              isMuted ? "Ativar som e iniciar vídeo" : "Desativar som"
+            }
             onClick={() => void toggleSound()}
           >
-            {isMuted ? "Ativar som" : "Desativar som"}
+            <img
+              className="splash__sound-icon"
+              src="/media/Icon-pikachu.png"
+              alt=""
+            />
+            <span className="splash__sound-label">
+              {isMuted ? "Ativar som" : "Desativar som"}
+            </span>
           </button>
           <button className="splash__skip" type="button" onClick={skipIntro}>
             Pular animação →
