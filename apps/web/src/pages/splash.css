@@ -7,4 +7,64 @@
 .splash__cta { position: fixed; top: 65svh; left: clamp(1.5rem, 6vw, 5.5rem); display: inline-flex; align-items: center; gap: .75rem; min-height: 44px; padding: .75rem .1rem .62rem; border: 0; border-bottom: 1px solid rgb(255 255 255 / 72%); background: transparent; color: #fff; font-size: clamp(.83rem, 1.5vw, 1rem); letter-spacing: .12em; text-align: left; text-transform: uppercase; opacity: 0; pointer-events: none; transform: translateX(-1rem); transition: border-color 180ms ease, transform 180ms ease; }.splash__cta--visible { pointer-events: auto; animation: cta-reveal 1.05s cubic-bezier(.22, 1, .36, 1) forwards; }.splash__cta:hover { border-color: #fff; transform: translateY(-2px); }
 .splash__controls { position: fixed; z-index: 1; bottom: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 1.25rem; }.splash__sound, .splash__skip, .splash__play-fallback { min-height: 44px; padding: .65rem 0; border: 0; border-bottom: 1px solid rgb(255 255 255 / 62%); background: transparent; color: #fff; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }.splash__play-fallback { position: fixed; z-index: 1; right: 1.5rem; bottom: 1.5rem; border-color: rgb(255 255 255 / 72%); }.splash__sound:hover, .splash__skip:hover, .splash__play-fallback:hover { border-color: #fff; }.splash button:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
 @keyframes splash-reveal { from { opacity: 0; filter: blur(8px); transform: translateY(22px) scale(.985); } to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); } } @keyframes cta-reveal { from { opacity: 0; filter: blur(6px); transform: translateX(-1.5rem); } to { opacity: 1; filter: blur(0); transform: translateX(0); } }
-@media (max-width: 900px) { .splash__veil { background: linear-gradient(180deg, rgb(0 0 0 / 18%), rgb(0 0 0 / 62%)); }.splash__brand { top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }.splash__brand h1 { font-size: clamp(3.25rem, 13vw, 5rem); }.splash__cta { top: 65svh; left: 50%; transform: translateX(-50%); white-space: nowrap; }.splash__cta--visible { animation-name: cta-reveal-mobile; }.splash__controls { right: 1.5rem; justify-content: center; gap: .85rem; }.splash__play-fallback { right: 50%; transform: translateX(50%); } } @keyframes cta-reveal-mobile { from { opacity: 0; filter: blur(6px); transform: translate(-58%, 0); } to { opacity: 1; filter: blur(0); transform: translateX(-50%); } } @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+@media (max-width: 900px) {
+  .splash__veil {
+    background: linear-gradient(180deg, rgb(0 0 0 / 18%), rgb(0 0 0 / 62%));
+  }
+
+  .splash__brand {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .splash__brand h1 {
+    font-size: clamp(3.25rem, 13vw, 5rem);
+  }
+
+  .splash__cta {
+    top: min(65svh, calc(100dvh - env(safe-area-inset-bottom) - 7rem));
+    left: 50%;
+    max-width: calc(100vw - 3rem);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .splash__cta--visible {
+    animation-name: cta-reveal-mobile;
+  }
+
+  .splash__controls {
+    right: 1.25rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: 1.25rem;
+    justify-content: space-between;
+    gap: .75rem;
+  }
+
+  .splash__sound,
+  .splash__skip {
+    flex: 0 1 auto;
+    font-size: clamp(.62rem, 3vw, .72rem);
+    letter-spacing: .11em;
+    white-space: nowrap;
+  }
+
+  .splash__play-fallback {
+    right: 50%;
+    bottom: max(5.5rem, calc(env(safe-area-inset-bottom) + 4.5rem));
+    max-width: calc(100vw - 2.5rem);
+    transform: translateX(50%);
+    white-space: nowrap;
+  }
+}
+
+@keyframes cta-reveal-mobile {
+  from { opacity: 0; filter: blur(6px); transform: translate(-58%, 0); }
+  to { opacity: 1; filter: blur(0); transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
