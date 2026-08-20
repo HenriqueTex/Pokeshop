@@ -30,10 +30,6 @@
     font-size: clamp(3.25rem, 13vw, 5rem);
   }
 
-  .splash--awaiting-start .splash__brand {
-    display: none;
-  }
-
   .splash__cta {
     top: min(65svh, calc(100dvh - env(safe-area-inset-bottom) - 7rem));
     left: 50%;
