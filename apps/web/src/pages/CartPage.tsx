@@ -11,7 +11,7 @@ export function CartPage() {
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <main className="shop-page">
+    <main className="shop-page cart-page">
       <section className="cart">
         <header className="cart__header">
           <div>
