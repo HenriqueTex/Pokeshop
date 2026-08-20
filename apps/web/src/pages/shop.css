@@ -927,7 +927,11 @@
     display: flex;
     padding-bottom: 0.3rem;
     overflow-x: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .collections-sidebar__list::-webkit-scrollbar {
+    display: none;
   }
   .collection-list-card {
     flex: 0 0 min(15rem, 78vw);
