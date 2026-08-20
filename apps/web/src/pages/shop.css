@@ -286,9 +286,103 @@
   color: rgb(255 255 255 / 66%);
   line-height: 1.6;
 }
-.collections-list {
+.collections-layout {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  gap: 2rem;
   padding-top: 2rem;
   border-top: 1px solid rgb(255 255 255 / 13%);
+}
+.collections-sidebar {
+  position: sticky;
+  top: 6.5rem;
+  align-self: start;
+}
+.collections-sidebar__list {
+  display: grid;
+  gap: 0.6rem;
+}
+.collection-list-card {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: 4.7rem;
+  padding: 0.9rem 1rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 0.75rem;
+  background: #171717;
+  color: #fff;
+  text-decoration: none;
+  transition: min-height 260ms ease;
+}
+.collection-list-card__image,
+.collection-list-card__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.collection-list-card__image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 200ms ease,
+    transform 260ms ease;
+}
+.collection-list-card__shade {
+  background: linear-gradient(0deg, rgb(0 0 0 / 80%), rgb(0 0 0 / 22%));
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.collection-list-card__copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+}
+.collection-list-card__copy > span {
+  color: #dfb15d;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+}
+.collection-list-card__copy strong {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.collection-list-card__copy small {
+  max-height: 0;
+  overflow: hidden;
+  color: #dfb15d;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  text-transform: uppercase;
+  transition:
+    max-height 180ms ease,
+    opacity 180ms ease;
+}
+.collection-list-card:hover,
+.collection-list-card:focus-visible {
+  min-height: 10rem;
+}
+.collection-list-card:hover .collection-list-card__image,
+.collection-list-card:focus-visible .collection-list-card__image,
+.collection-list-card:hover .collection-list-card__shade,
+.collection-list-card:focus-visible .collection-list-card__shade {
+  opacity: 1;
+}
+.collection-list-card:hover .collection-list-card__image,
+.collection-list-card:focus-visible .collection-list-card__image {
+  transform: scale(1);
+}
+.collection-list-card:hover .collection-list-card__copy small,
+.collection-list-card:focus-visible .collection-list-card__copy small {
+  max-height: 1.2rem;
+  opacity: 1;
 }
 .catalog-layout {
   display: grid;
@@ -705,6 +799,22 @@
   .product-grid,
   .collection-grid {
     grid-template-columns: 1fr;
+  }
+  .collections-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .collections-sidebar {
+    position: static;
+  }
+  .collections-sidebar__list {
+    display: flex;
+    padding-bottom: 0.3rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .collection-list-card {
+    flex: 0 0 min(15rem, 78vw);
   }
   .catalog-layout,
   .cart-layout,
