@@ -2,11 +2,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./splash.css";
 
+const EXIT_DURATION_MS = 900;
+const END_AUDIO_FADE_SECONDS = 2;
+
 export function SplashPage() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const fallbackTimerRef = useRef<number | undefined>(undefined);
   const exitTimerRef = useRef<number | undefined>(undefined);
+  const audioFadeTimerRef = useRef<number | undefined>(undefined);
   const [isFinished, setIsFinished] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
@@ -16,18 +20,58 @@ export function SplashPage() {
     window.matchMedia("(max-width: 900px)").matches,
   );
 
+  const stopAudioFade = useCallback(() => {
+    if (audioFadeTimerRef.current === undefined) return;
+    window.clearInterval(audioFadeTimerRef.current);
+    audioFadeTimerRef.current = undefined;
+  }, []);
+
+  const fadeAudioToSilence = useCallback(
+    (durationMs: number) => {
+      const video = videoRef.current;
+      stopAudioFade();
+      if (!video || video.muted || video.volume <= 0) return;
+
+      if (durationMs <= 0) {
+        video.volume = 0;
+        return;
+      }
+
+      const initialVolume = video.volume;
+      const startedAt = performance.now();
+      const updateVolume = () => {
+        const progress = Math.min(
+          (performance.now() - startedAt) / durationMs,
+          1,
+        );
+        video.volume = initialVolume * (1 - progress);
+
+        if (progress >= 1 && audioFadeTimerRef.current !== undefined) {
+          window.clearInterval(audioFadeTimerRef.current);
+          audioFadeTimerRef.current = undefined;
+        }
+      };
+
+      updateVolume();
+      audioFadeTimerRef.current = window.setInterval(updateVolume, 50);
+    },
+    [stopAudioFade],
+  );
+
   const continueToStore = useCallback(() => {
     if (isLeaving) return;
 
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    const exitDuration = reducedMotion ? 0 : EXIT_DURATION_MS;
+    fadeAudioToSilence(exitDuration);
     setIsLeaving(true);
     exitTimerRef.current = window.setTimeout(
       () => navigate("/home"),
-      reducedMotion ? 0 : 560,
+      exitDuration,
     );
-  }, [isLeaving, navigate]);
+  }, [fadeAudioToSilence, isLeaving, navigate]);
 
   const finishIntro = useCallback(() => {
     window.clearTimeout(fallbackTimerRef.current);
@@ -90,8 +134,9 @@ export function SplashPage() {
       document.removeEventListener("visibilitychange", retryWhenVisible);
       window.clearTimeout(fallbackTimerRef.current);
       window.clearTimeout(exitTimerRef.current);
+      stopAudioFade();
     };
-  }, [isMobileViewport, startVideo]);
+  }, [isMobileViewport, startVideo, stopAudioFade]);
 
   useEffect(() => {
     if (!isAutoplayBlocked || isFinished) return;
@@ -133,6 +178,34 @@ export function SplashPage() {
     );
   };
 
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (
+      !video ||
+      video.muted ||
+      audioFadeTimerRef.current !== undefined ||
+      !Number.isFinite(video.duration)
+    )
+      return;
+
+    const remainingDuration = video.duration - video.currentTime;
+    if (remainingDuration > END_AUDIO_FADE_SECONDS + 0.25) return;
+
+    const lowerVolume = () => {
+      if (video.muted || video.paused || video.ended) {
+        stopAudioFade();
+        return;
+      }
+
+      const remaining = Math.max(video.duration - video.currentTime, 0);
+      video.volume = Math.min(remaining / END_AUDIO_FADE_SECONDS, 1);
+      if (remaining <= 0) stopAudioFade();
+    };
+
+    lowerVolume();
+    audioFadeTimerRef.current = window.setInterval(lowerVolume, 50);
+  };
+
   const toggleSound = async () => {
     const video = videoRef.current;
     if (!video) return;
@@ -147,16 +220,20 @@ export function SplashPage() {
     const video = videoRef.current;
     if (!video || hasPlaybackStarted || isLeaving) return;
 
+    stopAudioFade();
     video.currentTime = 0;
+    video.volume = 1;
     video.muted = false;
     setIsMuted(false);
     await startVideo(true);
   };
 
   const skipIntro = () => {
-    videoRef.current?.pause();
     if (isMobileViewport) continueToStore();
-    else finishIntro();
+    else {
+      videoRef.current?.pause();
+      finishIntro();
+    }
   };
 
   const handlePrimaryAction = () => {
@@ -193,6 +270,7 @@ export function SplashPage() {
         onLoadedData={() => void startVideo()}
         onLoadedMetadata={() => void startVideo()}
         onPlaying={handlePlaying}
+        onTimeUpdate={handleTimeUpdate}
         onEnded={completeIntro}
       >
         <source src="/media/splash.mp4" type="video/mp4" />
