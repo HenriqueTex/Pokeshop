@@ -116,15 +116,16 @@ export function SplashPage() {
         <h1 id="splash-title">
           PokeShop<span>Pokémon Store</span>
         </h1>
-        <button
-          className={`splash__cta ${isFinished ? "splash__cta--visible" : ""}`}
-          type="button"
-          onClick={continueToStore}
-          disabled={isLeaving}
-        >
-          Sua aventura começa aqui <span aria-hidden="true">→</span>
-        </button>
       </section>
+
+      <button
+        className={`splash__cta ${isFinished ? "splash__cta--visible" : ""}`}
+        type="button"
+        onClick={continueToStore}
+        disabled={isLeaving}
+      >
+        Sua aventura começa aqui <span aria-hidden="true">→</span>
+      </button>
 
       {!isFinished && (
         <div className="splash__controls">
