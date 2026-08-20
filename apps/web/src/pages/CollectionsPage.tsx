@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { CollectionCard } from "../components/CollectionCard";
-import { CollectionListCard } from "../components/CollectionListCard";
 import { fetchCollections } from "../lib/api";
 import "./shop.css";
 
@@ -21,42 +20,26 @@ export function CollectionsPage() {
           cada lançamento memorável.
         </p>
       </section>
-      <section className="collections-layout" aria-label="Todas as coleções">
-        <aside className="collections-sidebar">
-          <p className="eyebrow">Disponíveis</p>
-          {collections.length > 0 && (
-            <div className="collections-sidebar__list">
-              {collections.map((collection, index) => (
-                <CollectionListCard
-                  key={collection.id}
-                  collection={collection}
-                  index={index}
-                />
-              ))}
-            </div>
-          )}
-        </aside>
-        <div className="collections-list">
-          {collectionsQuery.isPending ? (
-            <p className="catalog-message">Carregando coleções…</p>
-          ) : collectionsQuery.isError ? (
-            <p className="catalog-message">
-              Não foi possível carregar as coleções.
-            </p>
-          ) : collections.length ? (
-            <div className="collection-grid">
-              {collections.map((collection, index) => (
-                <CollectionCard
-                  key={collection.id}
-                  collection={collection}
-                  index={index}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="catalog-message">Nenhuma coleção foi publicada.</p>
-          )}
-        </div>
+      <section className="collections-list" aria-label="Todas as coleções">
+        {collectionsQuery.isPending ? (
+          <p className="catalog-message">Carregando coleções…</p>
+        ) : collectionsQuery.isError ? (
+          <p className="catalog-message">
+            Não foi possível carregar as coleções.
+          </p>
+        ) : collections.length ? (
+          <div className="collection-grid">
+            {collections.map((collection, index) => (
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                index={index}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="catalog-message">Nenhuma coleção foi publicada.</p>
+        )}
       </section>
     </main>
   );

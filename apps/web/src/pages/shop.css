@@ -290,8 +290,14 @@
   display: grid;
   grid-template-columns: 17rem minmax(0, 1fr);
   gap: 2rem;
+}
+.collections-list {
   padding-top: 2rem;
   border-top: 1px solid rgb(255 255 255 / 13%);
+}
+.collections-layout .collections-list {
+  padding-top: 0;
+  border-top: 0;
 }
 .collections-sidebar {
   position: sticky;
