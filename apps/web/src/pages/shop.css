@@ -434,10 +434,12 @@
 }
 .cart-page {
   background-color: #0a0a0a;
-  background-image: url("/media/backgroundblack.jpeg");
-  background-position: center top;
-  background-repeat: repeat;
-  background-size: 64rem auto;
+  background-image:
+    linear-gradient(rgb(10 10 10 / 52%), rgb(10 10 10 / 52%)),
+    url("/media/backgroundblack.jpeg");
+  background-position: center, center top;
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 64rem auto;
 }
 .cart__header {
   display: flex;
