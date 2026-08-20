@@ -12,10 +12,10 @@ export function SplashPage() {
   const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
-  const finishIntro = () => {
+  const finishIntro = useCallback(() => {
     window.clearTimeout(fallbackTimerRef.current);
     setIsFinished(true);
-  };
+  }, []);
 
   const startVideo = useCallback(async () => {
     const video = videoRef.current;
@@ -33,25 +33,68 @@ export function SplashPage() {
     const video = videoRef.current;
     if (!video) return;
 
+    video.autoplay = true;
     video.defaultMuted = true;
     video.muted = true;
+    video.playsInline = true;
+    video.setAttribute("autoplay", "");
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
     void startVideo();
 
+    const retryPlayback = () => void startVideo();
+    const retryWhenVisible = () => {
+      if (!document.hidden) void startVideo();
+    };
+
+    window.addEventListener("pageshow", retryPlayback);
+    document.addEventListener("visibilitychange", retryWhenVisible);
+
     return () => {
+      window.removeEventListener("pageshow", retryPlayback);
+      document.removeEventListener("visibilitychange", retryWhenVisible);
       window.clearTimeout(fallbackTimerRef.current);
       window.clearTimeout(exitTimerRef.current);
     };
   }, [startVideo]);
 
-  const handleLoadedMetadata = () => {
-    const duration = videoRef.current?.duration;
-    if (typeof duration !== "number" || !Number.isFinite(duration)) return;
+  useEffect(() => {
+    if (!isAutoplayBlocked || isFinished) return;
+
+    const unlockPlayback = () => {
+      document.removeEventListener("pointerdown", unlockPlayback, true);
+      document.removeEventListener("touchstart", unlockPlayback, true);
+      document.removeEventListener("keydown", unlockPlayback, true);
+      void startVideo();
+    };
+
+    document.addEventListener("pointerdown", unlockPlayback, true);
+    document.addEventListener("touchstart", unlockPlayback, {
+      capture: true,
+      passive: true,
+    });
+    document.addEventListener("keydown", unlockPlayback, true);
+
+    return () => {
+      document.removeEventListener("pointerdown", unlockPlayback, true);
+      document.removeEventListener("touchstart", unlockPlayback, true);
+      document.removeEventListener("keydown", unlockPlayback, true);
+    };
+  }, [isAutoplayBlocked, isFinished, startVideo]);
+
+  const handlePlaying = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    setIsAutoplayBlocked(false);
+    const remainingDuration = video.duration - video.currentTime;
+    if (!Number.isFinite(remainingDuration) || remainingDuration <= 0) return;
 
     window.clearTimeout(fallbackTimerRef.current);
     fallbackTimerRef.current = window.setTimeout(
       finishIntro,
-      duration * 1000 + 400,
+      remainingDuration * 1000 + 400,
     );
   };
 
@@ -99,11 +142,15 @@ export function SplashPage() {
         autoPlay
         muted
         playsInline
+        disablePictureInPicture
         preload="auto"
         poster="/media/splash-final.jpeg"
         aria-hidden="true"
         onCanPlay={() => void startVideo()}
-        onLoadedMetadata={handleLoadedMetadata}
+        onCanPlayThrough={() => void startVideo()}
+        onLoadedData={() => void startVideo()}
+        onLoadedMetadata={() => void startVideo()}
+        onPlaying={handlePlaying}
         onEnded={finishIntro}
       >
         <source src="/media/splash.mp4" type="video/mp4" />
