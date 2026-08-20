@@ -85,7 +85,7 @@ export function SplashPage() {
 
   return (
     <main
-      className={`splash ${isFinished ? "splash--finished" : ""} ${isLeaving ? "splash--leaving" : ""}`}
+      className={`splash ${isFinished ? "splash--finished" : ""} ${isAutoplayBlocked ? "splash--autoplay-blocked" : ""} ${isLeaving ? "splash--leaving" : ""}`}
       aria-busy={isLeaving}
     >
       <img
