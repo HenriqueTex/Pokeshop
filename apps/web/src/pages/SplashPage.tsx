@@ -11,14 +11,9 @@ export function SplashPage() {
   const fallbackTimerRef = useRef<number | undefined>(undefined);
   const exitTimerRef = useRef<number | undefined>(undefined);
   const audioFadeTimerRef = useRef<number | undefined>(undefined);
-  const [isFinished, setIsFinished] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
   const [hasPlaybackStarted, setHasPlaybackStarted] = useState(false);
-  const [isMobileViewport] = useState(() =>
-    window.matchMedia("(max-width: 900px)").matches,
-  );
 
   const stopAudioFade = useCallback(() => {
     if (audioFadeTimerRef.current === undefined) return;
@@ -61,6 +56,7 @@ export function SplashPage() {
   const continueToStore = useCallback(() => {
     if (isLeaving) return;
 
+    window.clearTimeout(fallbackTimerRef.current);
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -73,107 +69,48 @@ export function SplashPage() {
     );
   }, [fadeAudioToSilence, isLeaving, navigate]);
 
-  const finishIntro = useCallback(() => {
-    window.clearTimeout(fallbackTimerRef.current);
-    setHasPlaybackStarted(false);
-    setIsFinished(true);
-  }, []);
-
-  const completeIntro = useCallback(() => {
-    window.clearTimeout(fallbackTimerRef.current);
-    if (isMobileViewport) {
-      continueToStore();
-      return;
-    }
-
-    finishIntro();
-  }, [continueToStore, finishIntro, isMobileViewport]);
-
-  const startVideo = useCallback(async (allowMobileStart = false) => {
+  const startVideo = useCallback(async () => {
     const video = videoRef.current;
-    if (
-      !video ||
-      isFinished ||
-      (isMobileViewport && !allowMobileStart)
-    )
-      return;
+    if (!video) return;
 
     try {
       await video.play();
-      setIsAutoplayBlocked(false);
     } catch {
-      setIsAutoplayBlocked(true);
+      setHasPlaybackStarted(false);
     }
-  }, [isFinished, isMobileViewport]);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    video.autoplay = !isMobileViewport;
+    video.autoplay = false;
     video.defaultMuted = true;
     video.muted = true;
     video.playsInline = true;
-    if (isMobileViewport) video.removeAttribute("autoplay");
-    else video.setAttribute("autoplay", "");
+    video.removeAttribute("autoplay");
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
-    void startVideo();
-
-    const retryPlayback = () => void startVideo();
-    const retryWhenVisible = () => {
-      if (!document.hidden) void startVideo();
-    };
-
-    window.addEventListener("pageshow", retryPlayback);
-    document.addEventListener("visibilitychange", retryWhenVisible);
 
     return () => {
-      window.removeEventListener("pageshow", retryPlayback);
-      document.removeEventListener("visibilitychange", retryWhenVisible);
       window.clearTimeout(fallbackTimerRef.current);
       window.clearTimeout(exitTimerRef.current);
       stopAudioFade();
     };
-  }, [isMobileViewport, startVideo, stopAudioFade]);
-
-  useEffect(() => {
-    if (!isAutoplayBlocked || isFinished) return;
-
-    const unlockPlayback = () => {
-      document.removeEventListener("pointerdown", unlockPlayback, true);
-      document.removeEventListener("touchstart", unlockPlayback, true);
-      document.removeEventListener("keydown", unlockPlayback, true);
-      void startVideo(isMobileViewport);
-    };
-
-    document.addEventListener("pointerdown", unlockPlayback, true);
-    document.addEventListener("touchstart", unlockPlayback, {
-      capture: true,
-      passive: true,
-    });
-    document.addEventListener("keydown", unlockPlayback, true);
-
-    return () => {
-      document.removeEventListener("pointerdown", unlockPlayback, true);
-      document.removeEventListener("touchstart", unlockPlayback, true);
-      document.removeEventListener("keydown", unlockPlayback, true);
-    };
-  }, [isAutoplayBlocked, isFinished, isMobileViewport, startVideo]);
+  }, [stopAudioFade]);
 
   const handlePlaying = () => {
     const video = videoRef.current;
     if (!video) return;
 
     setHasPlaybackStarted(true);
-    setIsAutoplayBlocked(false);
     const remainingDuration = video.duration - video.currentTime;
     if (!Number.isFinite(remainingDuration) || remainingDuration <= 0) return;
 
     window.clearTimeout(fallbackTimerRef.current);
     fallbackTimerRef.current = window.setTimeout(
-      completeIntro,
+      continueToStore,
       remainingDuration * 1000 + 400,
     );
   };
@@ -212,11 +149,10 @@ export function SplashPage() {
 
     video.muted = !video.muted;
     setIsMuted(video.muted);
-
-    if (!video.muted) await startVideo(true);
+    if (!video.muted) await startVideo();
   };
 
-  const startMobileIntro = async () => {
+  const startIntro = async () => {
     const video = videoRef.current;
     if (!video || hasPlaybackStarted || isLeaving) return;
 
@@ -225,29 +161,12 @@ export function SplashPage() {
     video.volume = 1;
     video.muted = false;
     setIsMuted(false);
-    await startVideo(true);
-  };
-
-  const skipIntro = () => {
-    if (isMobileViewport) continueToStore();
-    else {
-      videoRef.current?.pause();
-      finishIntro();
-    }
-  };
-
-  const handlePrimaryAction = () => {
-    if (isMobileViewport && !hasPlaybackStarted && !isFinished) {
-      void startMobileIntro();
-      return;
-    }
-
-    continueToStore();
+    await startVideo();
   };
 
   return (
     <main
-      className={`splash ${isFinished ? "splash--finished" : ""} ${isAutoplayBlocked ? "splash--autoplay-blocked" : ""} ${isMobileViewport && !hasPlaybackStarted && !isFinished ? "splash--awaiting-start" : ""} ${isLeaving ? "splash--leaving" : ""}`}
+      className={`splash ${!hasPlaybackStarted ? "splash--awaiting-start" : ""} ${isLeaving ? "splash--leaving" : ""}`}
       aria-busy={isLeaving}
     >
       <img
@@ -258,20 +177,15 @@ export function SplashPage() {
       <video
         ref={videoRef}
         className="splash__video"
-        autoPlay={!isMobileViewport}
         muted
         playsInline
         disablePictureInPicture
         preload="auto"
         poster="/media/splash-final.jpeg"
         aria-hidden="true"
-        onCanPlay={() => void startVideo()}
-        onCanPlayThrough={() => void startVideo()}
-        onLoadedData={() => void startVideo()}
-        onLoadedMetadata={() => void startVideo()}
         onPlaying={handlePlaying}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={completeIntro}
+        onEnded={continueToStore}
       >
         <source src="/media/splash.mp4" type="video/mp4" />
       </video>
@@ -286,15 +200,15 @@ export function SplashPage() {
       </section>
 
       <button
-        className={`splash__cta ${isFinished ? "splash__cta--visible" : ""} ${!hasPlaybackStarted ? "splash__cta--mobile-visible" : ""}`}
+        className={`splash__cta ${!hasPlaybackStarted ? "splash__cta--ready" : ""}`}
         type="button"
-        onClick={handlePrimaryAction}
+        onClick={() => void startIntro()}
         disabled={isLeaving}
       >
         Sua aventura começa aqui <span aria-hidden="true">→</span>
       </button>
 
-      {!isFinished && (!isMobileViewport || hasPlaybackStarted) && (
+      {hasPlaybackStarted && (
         <div className="splash__controls">
           <button
             className="splash__sound"
@@ -303,9 +217,6 @@ export function SplashPage() {
             aria-label={isMuted ? "Ativar som" : "Desativar som"}
             onClick={() => void toggleSound()}
           >
-            <span className="splash__sound-label">
-              {isMuted ? "Ativar som" : "Desativar som"}
-            </span>
             {isMuted ? (
               <svg
                 className="splash__control-icon"
@@ -336,9 +247,8 @@ export function SplashPage() {
             className="splash__skip"
             type="button"
             aria-label="Avançar para a loja"
-            onClick={skipIntro}
+            onClick={continueToStore}
           >
-            <span className="splash__skip-label">Pular animação →</span>
             <svg
               className="splash__control-icon"
               viewBox="0 0 24 24"
@@ -351,15 +261,6 @@ export function SplashPage() {
             </svg>
           </button>
         </div>
-      )}
-      {isAutoplayBlocked && !isFinished && (
-        <button
-          className="splash__play-fallback"
-          type="button"
-          onClick={() => void startVideo()}
-        >
-          Toque para iniciar →
-        </button>
       )}
     </main>
   );
